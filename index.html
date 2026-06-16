@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Comercial · Fluent Mind Academy</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #f5f6fa; color: #2c3e50; }
+
+    /* ── HEADER ── */
+    .header {
+      background: linear-gradient(135deg, #1a2744 0%, #2d3f6e 100%);
+      color: #fff;
+      padding: 24px 28px 0;
+    }
+    .header-top {
+      display: flex; justify-content: space-between;
+      flex-wrap: wrap; gap: 14px; margin-bottom: 18px;
+      align-items: flex-start;
+    }
+    .header-brand { font-size: 11px; color: #4db8d4; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; }
+    .header-title { font-size: 24px; font-weight: 900; margin-top: 4px; }
+    .header-updated { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+
+    /* Filters */
+    .filters { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .filters label { color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 600; }
+    .filters input[type=date] {
+      border-radius: 8px; border: 1.5px solid rgba(255,255,255,0.25);
+      padding: 6px 10px; font-size: 13px; font-weight: 600;
+      background: rgba(255,255,255,0.12); color: #fff;
+      color-scheme: dark; cursor: pointer;
+    }
+    .filters span { color: rgba(255,255,255,0.45); }
+    .btn-clear {
+      background: rgba(255,255,255,0.15); border: none;
+      border-radius: 8px; padding: 7px 14px; color: #fff;
+      font-size: 12px; font-weight: 700; cursor: pointer;
+    }
+    .filter-count { color: rgba(255,255,255,0.4); font-size: 12px; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 4px; }
+    .tab {
+      padding: 9px 20px; border-radius: 10px 10px 0 0;
+      border: none; cursor: pointer; font-weight: 700; font-size: 14px;
+      background: transparent; color: rgba(255,255,255,0.6);
+      transition: all .2s;
+    }
+    .tab.active { background: #fff; }
+    .tab[data-tab="Geral"].active       { color: #1a2744; }
+    .tab[data-tab="Social Seller"].active{ color: #ea5167; }
+    .tab[data-tab="SDR"].active         { color: #4db8d4; }
+    .tab[data-tab="Closer"].active      { color: #27ae60; }
+
+    /* ── CONTENT ── */
+    .content { padding: 26px 28px; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* Section */
+    .section { margin-bottom: 28px; }
+    .section-title {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    }
+    .section-bar { width: 5px; height: 28px; border-radius: 3px; flex-shrink: 0; }
+    .section-title h2 { font-size: 17px; font-weight: 800; }
+
+    /* KPI row */
+    .kpi-row { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* KPI Card */
+    .kpi-card {
+      background: #fff; border-radius: 14px; padding: 18px 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      min-width: 150px; flex: 1;
+    }
+    .kpi-label {
+      font-size: 11px; color: #888; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
+    }
+    .kpi-value { font-size: 26px; font-weight: 800; }
+    .kpi-meta { margin-top: 8px; }
+    .kpi-meta-row {
+      display: flex; justify-content: space-between;
+      font-size: 11px; color: #aaa; margin-bottom: 3px;
+    }
+    .kpi-bar-bg { background: #eee; border-radius: 99px; height: 5px; }
+    .kpi-bar    { height: 5px; border-radius: 99px; transition: width .5s; }
+
+    /* Cash badge */
+    .cash-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      border-radius: 20px; padding: 3px 10px;
+      font-size: 12px; font-weight: 800; color: #fff; margin-top: 8px;
+    }
+
+    /* Stat card */
+    .stat-row { display: flex; gap: 14px; flex-wrap: wrap; }
+    .stat-card {
+      background: #fff; border-radius: 14px; padding: 18px 22px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07); flex: 1; min-width: 160px;
+    }
+    .stat-label {
+      font-size: 11px; color: #888; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;
+    }
+    .stat-value { font-size: 30px; font-weight: 900; }
+    .stat-desc  { font-size: 11px; color: #bbb; margin-top: 2px; }
+
+    /* Bar chart */
+    .chart-wrap {
+      background: #fff; border-radius: 14px; padding: 20px 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .chart { display: flex; align-items: flex-end; gap: 4px; height: 150px; padding-top: 10px; }
+    .chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .chart-val { font-size: 9px; color: #888; font-weight: 600; }
+    .chart-bar { width: 100%; border-radius: 4px 4px 0 0; min-height: 2px; opacity: .85; }
+    .chart-lbl {
+      font-size: 8px; color: #aaa; text-align: center;
+      transform: rotate(-35deg); transform-origin: top center;
+      margin-top: 4px; white-space: nowrap;
+    }
+
+    /* Table */
+    .table-wrap {
+      background: #fff; border-radius: 14px; overflow: auto;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead tr { color: #fff; }
+    th { padding: 10px 13px; text-align: left; font-weight: 700; white-space: nowrap; }
+    td { padding: 9px 13px; white-space: nowrap; }
+
+    /* Loading / error */
+    .loading {
+      display: flex; align-items: center; justify-content: center;
+      height: 300px; font-size: 16px; color: #aaa; flex-direction: column; gap: 12px;
+    }
+    .spinner {
+      width: 36px; height: 36px; border: 4px solid #eee;
+      border-top-color: #ea5167; border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .footer { text-align: center; color: #bbb; font-size: 11px; margin-top: 16px; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="header-brand">Fluent Mind Academy</div>
+      <div class="header-title">Dashboard Comercial 📊</div>
+      <div class="header-updated" id="last-updated">Carregando dados...</div>
+    </div>
+    <div class="filters">
+      <label>📅 De:</label>
+      <input type="date" id="date-from" />
+      <span>até</span>
+      <input type="date" id="date-to" />
+      <button class="btn-clear" onclick="clearDates()">↺ Limpar</button>
+      <span class="filter-count" id="filter-count"></span>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-tab="Geral"        onclick="switchTab(this)">Geral</button>
+    <button class="tab"        data-tab="Social Seller" onclick="switchTab(this)">Social Seller</button>
+    <button class="tab"        data-tab="SDR"          onclick="switchTab(this)">SDR</button>
+    <button class="tab"        data-tab="Closer"       onclick="switchTab(this)">Closer</button>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <span>Carregando dados da planilha...</span>
+  </div>
+
+  <!-- GERAL -->
+  <div class="panel active" id="panel-Geral">
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#1a2744"></div>
+        <h2>Visão Geral</h2>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-card" style="border-top:4px solid #1a2744">
+          <div class="kpi-label">💰 Faturamento Total</div>
+          <div class="kpi-value" id="g-fat-total">—</div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #1a2744">
+          <div class="kpi-label">💵 Cash Collected Total</div>
+          <div class="kpi-value" id="g-cash-total">—</div>
+          <div id="g-cash-badge"></div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #ea5167">
+          <div class="kpi-label">📲 Ativações SS</div>
+          <div class="kpi-value" id="g-ss-atv">—</div>
+          <div class="kpi-meta" id="g-ss-atv-meta"></div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #4db8d4">
+          <div class="kpi-label">📅 Agendamentos Closer</div>
+          <div class="kpi-value" id="g-cl-agend">—</div>
+          <div class="kpi-meta" id="g-cl-agend-meta"></div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #27ae60">
+          <div class="kpi-label">📞 Calls Realizadas</div>
+          <div class="kpi-value" id="g-cl-real">—</div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #f5a623">
+          <div class="kpi-label">🏆 Vendas (Closer)</div>
+          <div class="kpi-value" id="g-cl-vendas">—</div>
+          <div class="kpi-meta" id="g-cl-vendas-meta"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#f5a623"></div>
+        <h2>Conversão do Funil</h2>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card" style="border-top:4px solid #f5a623">
+          <div class="stat-label">Taxa de Show</div>
+          <div class="stat-value" style="color:#f5a623" id="g-show-rate">—</div>
+          <div class="stat-desc">Agendadas → Realizadas</div>
+        </div>
+        <div class="stat-card" style="border-top:4px solid #f5a623">
+          <div class="stat-label">Taxa de Fechamento</div>
+          <div class="stat-value" style="color:#f5a623" id="g-close-rate">—</div>
+          <div class="stat-desc">Realizadas → Vendas</div>
+        </div>
+        <div class="stat-card" style="border-top:4px solid #f5a623">
+          <div class="stat-label">No-Show Closer</div>
+          <div class="stat-value" style="color:#f5a623" id="g-noshow">—</div>
+        </div>
+        <div class="stat-card" style="border-top:4px solid #f5a623">
+          <div class="stat-label">Em Negociação</div>
+          <div class="stat-value" style="color:#f5a623" id="g-neg">—</div>
+        </div>
+        <div class="stat-card" style="border-top:4px solid #f5a623">
+          <div class="stat-label">Recusou</div>
+          <div class="stat-value" style="color:#f5a623" id="g-rec">—</div>
+        </div>
+        <div class="stat-card" style="border-top:4px solid #f5a623">
+          <div class="stat-label">Leads SS→SDR</div>
+          <div class="stat-value" style="color:#f5a623" id="g-ss-lead">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#4db8d4"></div>
+        <h2>Faturamento por Dia</h2>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart" id="chart-geral"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL SELLER -->
+  <div class="panel" id="panel-Social Seller">
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#ea5167"></div>
+        <h2>Social Seller — Ativação e Conversão</h2>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-card" style="border-top:4px solid #ea5167">
+          <div class="kpi-label">📲 Ativações</div>
+          <div class="kpi-value" id="ss-atv">—</div>
+          <div class="kpi-meta" id="ss-atv-meta"></div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #ea5167">
+          <div class="kpi-label">🎯 Leads → SDR</div>
+          <div class="kpi-value" id="ss-lead">—</div>
+          <div class="kpi-meta" id="ss-lead-meta"></div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #ea5167">
+          <div class="kpi-label">💰 Faturamento Método</div>
+          <div class="kpi-value" id="ss-fat">—</div>
+          <div class="kpi-meta" id="ss-fat-meta"></div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #ea5167">
+          <div class="kpi-label">💵 Cash Collected</div>
+          <div class="kpi-value" id="ss-cash">—</div>
+          <div id="ss-cash-badge"></div>
+          <div class="kpi-meta" id="ss-cash-meta"></div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #ea5167">
+          <div class="kpi-label">🏷️ Vendas Método</div>
+          <div class="kpi-value" id="ss-vendas">—</div>
+          <div class="kpi-meta" id="ss-vendas-meta"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#ea5167"></div>
+        <h2>Taxas SS</h2>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card" style="border-top:4px solid #ea5167">
+          <div class="stat-label">Conv. Ativação→Lead</div>
+          <div class="stat-value" style="color:#ea5167" id="ss-conv">—</div>
+        </div>
+        <div class="stat-card" style="border-top:4px solid #ea5167">
+          <div class="stat-label">Total Ativações</div>
+          <div class="stat-value" style="color:#ea5167" id="ss-atv2">—</div>
+        </div>
+        <div class="stat-card" style="border-top:4px solid #ea5167">
+          <div class="stat-label">Total Leads</div>
+          <div class="stat-value" style="color:#ea5167" id="ss-lead2">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#ea5167"></div>
+        <h2>Ativações por Dia</h2>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart" id="chart-ss"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#ea5167"></div>
+        <h2>Histórico Diário — Social Seller</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr style="background:#ea5167">
+              <th>Dia</th><th>Data</th><th>S</th>
+              <th>Ativações</th><th>Leads SDR</th>
+              <th>Faturamento</th><th>Cash</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-ss"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SDR -->
+  <div class="panel" id="panel-SDR">
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#4db8d4"></div>
+        <h2>SDR — Qualificação</h2>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-card" style="border-top:4px solid #4db8d4">
+          <div class="kpi-label">📅 Agendamentos</div>
+          <div class="kpi-value" id="sdr-agend">—</div>
+          <div class="kpi-meta" id="sdr-agend-meta"></div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #4db8d4">
+          <div class="kpi-label">❌ No-Shows SDR</div>
+          <div class="kpi-value" id="sdr-noshow">—</div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #4db8d4">
+          <div class="kpi-label">📞 Lig. Realizadas</div>
+          <div class="kpi-value" id="sdr-lig">—</div>
+          <div class="kpi-meta" id="sdr-lig-meta"></div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #4db8d4">
+          <div class="kpi-label">✅ Lig. Atendidas</div>
+          <div class="kpi-value" id="sdr-atend">—</div>
+          <div class="kpi-meta" id="sdr-atend-meta"></div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #4db8d4">
+          <div class="kpi-label">🏷️ Vendas Método</div>
+          <div class="kpi-value" id="sdr-vendas">—</div>
+          <div class="kpi-meta" id="sdr-vendas-meta"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#4db8d4"></div>
+        <h2>Eficiência SDR</h2>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card" style="border-top:4px solid #4db8d4">
+          <div class="stat-label">Taxa Atendimento</div>
+          <div class="stat-value" style="color:#4db8d4" id="sdr-taxa-atend">—</div>
+        </div>
+        <div class="stat-card" style="border-top:4px solid #4db8d4">
+          <div class="stat-label">Taxa No-Show SDR</div>
+          <div class="stat-value" style="color:#4db8d4" id="sdr-taxa-noshow">—</div>
+        </div>
+        <div class="stat-card" style="border-top:4px solid #4db8d4">
+          <div class="stat-label">Conv. Atend→Venda</div>
+          <div class="stat-value" style="color:#4db8d4" id="sdr-conv-venda">—</div>
+        </div>
+        <div class="stat-card" style="border-top:4px solid #4db8d4">
+          <div class="stat-label">Conv. Atend→Agend</div>
+          <div class="stat-value" style="color:#4db8d4" id="sdr-conv-agend">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#4db8d4"></div>
+        <h2>Agendamentos por Dia</h2>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart" id="chart-sdr"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#4db8d4"></div>
+        <h2>Histórico Diário — SDR</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr style="background:#4db8d4">
+              <th>Dia</th><th>Data</th><th>S</th>
+              <th>Agend.</th><th>No-Show</th>
+              <th>Lig. Real.</th><th>Lig. Atend.</th><th>Vendas</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-sdr"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLOSER -->
+  <div class="panel" id="panel-Closer">
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#27ae60"></div>
+        <h2>Closer — Vendas Mentoria</h2>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-card" style="border-top:4px solid #27ae60">
+          <div class="kpi-label">📅 Calls Agendadas</div>
+          <div class="kpi-value" id="cl-agend">—</div>
+          <div class="kpi-meta" id="cl-agend-meta"></div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #27ae60">
+          <div class="kpi-label">✅ Calls Realizadas</div>
+          <div class="kpi-value" id="cl-real">—</div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #27ae60">
+          <div class="kpi-label">❌ No-Shows</div>
+          <div class="kpi-value" id="cl-noshow">—</div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #27ae60">
+          <div class="kpi-label">🏆 Vendas</div>
+          <div class="kpi-value" id="cl-vendas">—</div>
+          <div class="kpi-meta" id="cl-vendas-meta"></div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #f5a623">
+          <div class="kpi-label">🤝 Em Negociação</div>
+          <div class="kpi-value" id="cl-neg">—</div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #ea5167">
+          <div class="kpi-label">🚫 Recusou</div>
+          <div class="kpi-value" id="cl-rec">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#27ae60"></div>
+        <h2>Financeiro Closer</h2>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-card" style="border-top:4px solid #27ae60">
+          <div class="kpi-label">💰 Faturamento Mentoria</div>
+          <div class="kpi-value" id="cl-fat">—</div>
+          <div class="kpi-meta" id="cl-fat-meta"></div>
+        </div>
+        <div class="kpi-card" style="border-top:4px solid #27ae60">
+          <div class="kpi-label">💵 Cash Collected</div>
+          <div class="kpi-value" id="cl-cash">—</div>
+          <div id="cl-cash-badge"></div>
+          <div class="kpi-meta" id="cl-cash-meta"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#27ae60"></div>
+        <h2>Taxas de Conversão</h2>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card" style="border-top:4px solid #27ae60">
+          <div class="stat-label">Taxa de Show</div>
+          <div class="stat-value" style="color:#27ae60" id="cl-show-rate">—</div>
+          <div class="stat-desc">Agendadas → Realizadas</div>
+        </div>
+        <div class="stat-card" style="border-top:4px solid #27ae60">
+          <div class="stat-label">Taxa de Fechamento</div>
+          <div class="stat-value" style="color:#27ae60" id="cl-close-rate">—</div>
+          <div class="stat-desc">Realizadas → Vendas</div>
+        </div>
+        <div class="stat-card" style="border-top:4px solid #27ae60">
+          <div class="stat-label">Taxa No-Show</div>
+          <div class="stat-value" style="color:#27ae60" id="cl-noshow-rate">—</div>
+          <div class="stat-desc">Agendadas → No-Show</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#27ae60"></div>
+        <h2>Faturamento por Dia</h2>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart" id="chart-closer"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="section-bar" style="background:#27ae60"></div>
+        <h2>Histórico Diário — Closer</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr style="background:#27ae60">
+              <th>Dia</th><th>Data</th><th>S</th>
+              <th>Agend.</th><th>Realiz.</th><th>No-Show</th>
+              <th>Vendas</th><th>Neg.</th><th>Recusou</th>
+              <th>Faturamento</th><th>Cash</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-closer"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer" id="footer">Fluent Mind Academy · Dashboard Comercial</div>
+</div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+const METAS = {
+  ss_atv:900, ss_lead:60,
+  sdr_agend:75, sdr_lig:450, sdr_atend:150, sdr_vendas:12,
+  closer_agend:15, closer_vendas:15,
+  closer_fat:100000, closer_cash:80000,
+  ss_fat:34000, ss_cash:27200,
+};
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+const fmt  = v => (v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const pct  = (v,t) => t>0 ? Math.round(v/t*100) : 0;
+const num  = v => (v||0).toLocaleString('pt-BR');
+const $    = id => document.getElementById(id);
+
+function cashColor(p) {
+  if (p >= 80) return '#27ae60';
+  if (p >= 50) return '#f5a623';
+  return '#ea5167';
+}
+function cashEmoji(p) {
+  if (p >= 80) return '🟢';
+  if (p >= 50) return '🟡';
+  return '🔴';
+}
+
+function metaHtml(value, meta, isMonetary) {
+  if (!meta) return '';
+  const p = pct(value, meta);
+  const color = p>=100?'#27ae60':p>=60?'#f5a623':'#ea5167';
+  const metaLabel = isMonetary ? fmt(meta) : meta;
+  return `<div class="kpi-meta">
+    <div class="kpi-meta-row">
+      <span>Meta: ${metaLabel}</span>
+      <span style="color:${color};font-weight:700">${p}%</span>
+    </div>
+    <div class="kpi-bar-bg">
+      <div class="kpi-bar" style="background:${color};width:${Math.min(p,100)}%"></div>
+    </div>
+  </div>`;
+}
+
+function cashBadge(cash, fat, elId) {
+  const p = pct(cash, fat);
+  const el = $(elId);
+  if (!el) return;
+  el.innerHTML = fat > 0
+    ? `<div class="cash-badge" style="background:${cashColor(p)}">
+        ${cashEmoji(p)} ${p}% do faturado
+       </div>`
+    : '';
+}
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let allData = [];
+let filtered = [];
+let minDate = '', maxDate = '';
+
+// ── TABS ─────────────────────────────────────────────────────────────────────
+function switchTab(btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  $('panel-' + btn.dataset.tab).classList.add('active');
+}
+
+// ── DATE FILTER ──────────────────────────────────────────────────────────────
+function applyFilter() {
+  const from = $('date-from').value || minDate;
+  const to   = $('date-to').value   || maxDate;
+  filtered = allData.filter(d => d.date >= from && d.date <= to);
+  $('filter-count').textContent = filtered.length + ' dia' + (filtered.length!==1?'s':'');
+  render();
+}
+
+function clearDates() {
+  $('date-from').value = minDate;
+  $('date-to').value   = maxDate;
+  applyFilter();
+}
+
+$('date-from').addEventListener('change', applyFilter);
+$('date-to').addEventListener('change',   applyFilter);
+
+// ── RENDER ───────────────────────────────────────────────────────────────────
+function sum(key) { return filtered.reduce((a,d) => a+(d[key]||0), 0); }
+
+function render() {
+  const k = {
+    ss_atv:       sum('ss_atv'),
+    ss_lead:      sum('ss_lead'),
+    sdr_agend:    sum('sdr_agend'),
+    sdr_noshow:   sum('sdr_noshow'),
+    sdr_lig:      sum('sdr_lig'),
+    sdr_atend:    sum('sdr_atend'),
+    sdr_vendas:   sum('sdr_vendas'),
+    ss_fat:       sum('ss_fat'),
+    ss_cash:      sum('ss_cash'),
+    cl_agend:     sum('closer_agend'),
+    cl_real:      sum('closer_real'),
+    cl_noshow:    sum('closer_noshow'),
+    cl_vendas:    sum('closer_vendas'),
+    cl_neg:       sum('closer_neg'),
+    cl_rec:       sum('closer_rec'),
+    cl_fat:       sum('closer_fat'),
+    cl_cash:      sum('closer_cash'),
+  };
+
+  const totalFat  = k.ss_fat  + k.cl_fat;
+  const totalCash = k.ss_cash + k.cl_cash;
+
+  // ── GERAL ──
+  $('g-fat-total').textContent   = fmt(totalFat);
+  $('g-cash-total').textContent  = fmt(totalCash);
+  cashBadge(totalCash, totalFat, 'g-cash-badge');
+  $('g-ss-atv').textContent      = num(k.ss_atv);
+  $('g-ss-atv-meta').innerHTML   = metaHtml(k.ss_atv, METAS.ss_atv, false);
+  $('g-cl-agend').textContent    = num(k.cl_agend);
+  $('g-cl-agend-meta').innerHTML = metaHtml(k.cl_agend, METAS.closer_agend, false);
+  $('g-cl-real').textContent     = num(k.cl_real);
+  $('g-cl-vendas').textContent   = num(k.cl_vendas);
+  $('g-cl-vendas-meta').innerHTML= metaHtml(k.cl_vendas, METAS.closer_vendas, false);
+  $('g-show-rate').textContent   = pct(k.cl_real, k.cl_agend) + '%';
+  $('g-close-rate').textContent  = pct(k.cl_vendas, k.cl_real) + '%';
+  $('g-noshow').textContent      = num(k.cl_noshow);
+  $('g-neg').textContent         = num(k.cl_neg);
+  $('g-rec').textContent         = num(k.cl_rec);
+  $('g-ss-lead').textContent     = num(k.ss_lead);
+
+  // ── SS ──
+  $('ss-atv').textContent      = num(k.ss_atv);
+  $('ss-atv-meta').innerHTML   = metaHtml(k.ss_atv, METAS.ss_atv, false);
+  $('ss-lead').textContent     = num(k.ss_lead);
+  $('ss-lead-meta').innerHTML  = metaHtml(k.ss_lead, METAS.ss_lead, false);
+  $('ss-fat').textContent      = fmt(k.ss_fat);
+  $('ss-fat-meta').innerHTML   = metaHtml(k.ss_fat, METAS.ss_fat, true);
+  $('ss-cash').textContent     = fmt(k.ss_cash);
+  $('ss-cash-meta').innerHTML  = metaHtml(k.ss_cash, METAS.ss_cash, true);
+  cashBadge(k.ss_cash, k.ss_fat, 'ss-cash-badge');
+  $('ss-vendas').textContent   = num(k.sdr_vendas);
+  $('ss-vendas-meta').innerHTML= metaHtml(k.sdr_vendas, METAS.sdr_vendas, false);
+  $('ss-conv').textContent     = pct(k.ss_lead, k.ss_atv) + '%';
+  $('ss-atv2').textContent     = num(k.ss_atv);
+  $('ss-lead2').textContent    = num(k.ss_lead);
+
+  // ── SDR ──
+  $('sdr-agend').textContent       = num(k.sdr_agend);
+  $('sdr-agend-meta').innerHTML    = metaHtml(k.sdr_agend, METAS.sdr_agend, false);
+  $('sdr-noshow').textContent      = num(k.sdr_noshow);
+  $('sdr-lig').textContent         = num(k.sdr_lig);
+  $('sdr-lig-meta').innerHTML      = metaHtml(k.sdr_lig, METAS.sdr_lig, false);
+  $('sdr-atend').textContent       = num(k.sdr_atend);
+  $('sdr-atend-meta').innerHTML    = metaHtml(k.sdr_atend, METAS.sdr_atend, false);
+  $('sdr-vendas').textContent      = num(k.sdr_vendas);
+  $('sdr-vendas-meta').innerHTML   = metaHtml(k.sdr_vendas, METAS.sdr_vendas, false);
+  $('sdr-taxa-atend').textContent  = pct(k.sdr_atend, k.sdr_lig) + '%';
+  $('sdr-taxa-noshow').textContent = pct(k.sdr_noshow, k.sdr_agend) + '%';
+  $('sdr-conv-venda').textContent  = pct(k.sdr_vendas, k.sdr_atend) + '%';
+  $('sdr-conv-agend').textContent  = pct(k.sdr_agend, k.sdr_atend) + '%';
+
+  // ── CLOSER ──
+  $('cl-agend').textContent      = num(k.cl_agend);
+  $('cl-agend-meta').innerHTML   = metaHtml(k.cl_agend, METAS.closer_agend, false);
+  $('cl-real').textContent       = num(k.cl_real);
+  $('cl-noshow').textContent     = num(k.cl_noshow);
+  $('cl-vendas').textContent     = num(k.cl_vendas);
+  $('cl-vendas-meta').innerHTML  = metaHtml(k.cl_vendas, METAS.closer_vendas, false);
+  $('cl-neg').textContent        = num(k.cl_neg);
+  $('cl-rec').textContent        = num(k.cl_rec);
+  $('cl-fat').textContent        = fmt(k.cl_fat);
+  $('cl-fat-meta').innerHTML     = metaHtml(k.cl_fat, METAS.closer_fat, true);
+  $('cl-cash').textContent       = fmt(k.cl_cash);
+  $('cl-cash-meta').innerHTML    = metaHtml(k.cl_cash, METAS.closer_cash, true);
+  cashBadge(k.cl_cash, k.cl_fat, 'cl-cash-badge');
+  $('cl-show-rate').textContent  = pct(k.cl_real, k.cl_agend) + '%';
+  $('cl-close-rate').textContent = pct(k.cl_vendas, k.cl_real) + '%';
+  $('cl-noshow-rate').textContent= pct(k.cl_noshow, k.cl_agend) + '%';
+
+  // ── CHARTS ──
+  renderChart('chart-geral',  filtered, d => d.closer_fat,    '#4db8d4');
+  renderChart('chart-ss',     filtered, d => d.ss_atv,        '#ea5167');
+  renderChart('chart-sdr',    filtered, d => d.sdr_agend,     '#4db8d4');
+  renderChart('chart-closer', filtered, d => d.closer_fat,    '#27ae60');
+
+  // ── TABLES ──
+  renderTableSS();
+  renderTableSDR();
+  renderTableCloser();
+}
+
+function renderChart(elId, data, accessor, color) {
+  const el = $(elId);
+  if (!el) return;
+  const max = Math.max(...data.map(accessor), 1);
+  const H = 118;
+  el.innerHTML = data.map(d => {
+    const v = accessor(d);
+    const h = Math.max(Math.round((v/max)*H), 2);
+    const lbl = d.date ? d.date.slice(5).split('-').reverse().join('/') : '';
+    return `<div class="chart-col">
+      <div class="chart-val">${v||0}</div>
+      <div class="chart-bar" style="height:${h}px;background:${color}"></div>
+      <div class="chart-lbl">${lbl}</div>
+    </div>`;
+  }).join('');
+}
+
+function isoToBR(iso) {
+  if (!iso) return '';
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+function renderTableSS() {
+  $('tbody-ss').innerHTML = filtered.map((d,i) => `
+    <tr style="background:${i%2===0?'#fff':'#fef6f7'};border-bottom:1px solid #f0e0e3">
+      <td style="color:#666">${d.day}</td>
+      <td style="font-weight:600">${isoToBR(d.date)}</td>
+      <td style="color:#aaa">S${d.week}</td>
+      <td style="font-weight:700;color:#ea5167">${d.ss_atv||0}</td>
+      <td>${d.ss_lead||0}</td>
+      <td style="color:#27ae60">${fmt(d.ss_fat)}</td>
+      <td style="color:#27ae60">${fmt(d.ss_cash)}</td>
+    </tr>`).join('');
+}
+
+function renderTableSDR() {
+  $('tbody-sdr').innerHTML = filtered.map((d,i) => `
+    <tr style="background:${i%2===0?'#fff':'#f0fafd'};border-bottom:1px solid #e0f0f5">
+      <td style="color:#666">${d.day}</td>
+      <td style="font-weight:600">${isoToBR(d.date)}</td>
+      <td style="color:#aaa">S${d.week}</td>
+      <td style="font-weight:700;color:#4db8d4">${d.sdr_agend||0}</td>
+      <td style="color:${(d.sdr_noshow||0)>0?'#ea5167':'#aaa'}">${d.sdr_noshow||0}</td>
+      <td>${d.sdr_lig||0}</td>
+      <td>${d.sdr_atend||0}</td>
+      <td style="font-weight:700;color:#27ae60">${d.sdr_vendas||0}</td>
+    </tr>`).join('');
+}
+
+function renderTableCloser() {
+  $('tbody-closer').innerHTML = filtered.map((d,i) => `
+    <tr style="background:${i%2===0?'#fff':'#f0fdf4'};border-bottom:1px solid #e0f0e8">
+      <td style="color:#666">${d.day}</td>
+      <td style="font-weight:600">${isoToBR(d.date)}</td>
+      <td style="color:#aaa">S${d.week}</td>
+      <td>${d.closer_agend||0}</td>
+      <td style="font-weight:700;color:#27ae60">${d.closer_real||0}</td>
+      <td style="color:${(d.closer_noshow||0)>0?'#ea5167':'#aaa'}">${d.closer_noshow||0}</td>
+      <td style="font-weight:700;color:#f5a623">${d.closer_vendas||0}</td>
+      <td>${d.closer_neg||0}</td>
+      <td style="color:#ea5167">${d.closer_rec||0}</td>
+      <td style="color:#27ae60">${fmt(d.closer_fat)}</td>
+      <td style="color:#27ae60">${fmt(d.closer_cash)}</td>
+    </tr>`).join('');
+}
+
+// ── LOAD DATA ────────────────────────────────────────────────────────────────
+async function loadData() {
+  try {
+    // Cache-bust para sempre pegar a versão mais recente
+    const res = await fetch('./dados.json?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const json = await res.json();
+
+    allData = json.dados || [];
+    const meta = json.meta || {};
+
+    // Datas min/max
+    const dates = allData.map(d => d.date).sort();
+    minDate = dates[0] || '';
+    maxDate = dates[dates.length-1] || '';
+
+    $('date-from').min = minDate;
+    $('date-from').max = maxDate;
+    $('date-to').min   = minDate;
+    $('date-to').max   = maxDate;
+    $('date-from').value = minDate;
+    $('date-to').value   = maxDate;
+
+    if (meta.atualizado) {
+      $('last-updated').textContent = '🔄 Atualizado em: ' + meta.atualizado;
+    }
+    if (meta.footer) {
+      $('footer').textContent = meta.footer;
+    }
+
+    $('loading').style.display = 'none';
+    filtered = [...allData];
+    $('filter-count').textContent = filtered.length + ' dias';
+    render();
+
+  } catch(e) {
+    $('loading').innerHTML = `
+      <div style="color:#ea5167;font-size:14px">
+        ⚠️ Erro ao carregar dados.json<br>
+        <small style="color:#aaa">${e.message}</small>
+      </div>`;
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>
