@@ -8,109 +8,136 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Inter', system-ui, sans-serif; background: #f5f6fa; color: #2c3e50; }
 
-    .header {
-      background: linear-gradient(135deg, #1a2744 0%, #2d3f6e 100%);
-      color: #fff; padding: 24px 28px 0;
-    }
-    .header-top {
-      display: flex; justify-content: space-between;
-      flex-wrap: wrap; gap: 14px; margin-bottom: 18px; align-items: flex-start;
-    }
+    /* HEADER */
+    .header { background: linear-gradient(135deg, #1a2744 0%, #2d3f6e 100%); color: #fff; padding: 20px 28px 0; }
+    .header-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; align-items: flex-start; }
     .header-brand { font-size: 11px; color: #4db8d4; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
-    .header-title { font-size: 24px; font-weight: 900; margin-top: 4px; }
-    .header-updated { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+    .header-title { font-size: 22px; font-weight: 900; margin-top: 2px; }
+    .header-updated { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
 
-    .filters { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .filters label { color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 600; }
-    .filters input[type=date] {
-      border-radius: 8px; border: 1.5px solid rgba(255,255,255,0.25);
-      padding: 6px 10px; font-size: 13px; font-weight: 600;
-      background: rgba(255,255,255,0.12); color: #fff; color-scheme: dark; cursor: pointer;
-    }
-    .filters span { color: rgba(255,255,255,0.45); }
-    .btn-clear { background: rgba(255,255,255,0.15); border: none; border-radius: 8px; padding: 7px 14px; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
+    /* CONTROLS */
+    .controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .controls label { color: rgba(255,255,255,0.7); font-size: 12px; font-weight: 600; }
+    .controls input[type=date] { border-radius: 8px; border: 1.5px solid rgba(255,255,255,0.25); padding: 5px 9px; font-size: 12px; font-weight: 600; background: rgba(255,255,255,0.12); color: #fff; color-scheme: dark; cursor: pointer; }
+    .controls span.sep { color: rgba(255,255,255,0.45); font-size: 12px; }
+    .btn { border: none; border-radius: 8px; padding: 6px 13px; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .btn-ghost  { background: rgba(255,255,255,0.15); color: #fff; }
+    .btn-red    { background: #ea5167; color: #fff; }
+    .btn-blue   { background: #4db8d4; color: #fff; }
+    .btn-active { background: #fff; color: #1a2744; }
+    .btn:disabled { opacity: .6; cursor: not-allowed; }
+    .filter-count { color: rgba(255,255,255,0.4); font-size: 11px; }
 
-    .btn-refresh {
-      background: #ea5167; border: none; border-radius: 8px;
-      padding: 7px 16px; color: #fff; font-size: 12px; font-weight: 800;
-      cursor: pointer; display: flex; align-items: center; gap: 6px;
-      transition: background .2s, opacity .2s;
-    }
-    .btn-refresh:hover { background: #d4405a; }
-    .btn-refresh:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-refresh .spin { display: inline-block; animation: spin .8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    /* COMPARE BAR */
+    .compare-bar { background: rgba(77,184,212,0.15); border-radius: 10px; padding: 8px 14px; margin-top: 8px; display: none; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .compare-bar.visible { display: flex; }
+    .compare-bar label { color: rgba(255,255,255,0.8); font-size: 11px; font-weight: 700; }
+    .period-badge { font-size: 10px; font-weight: 800; border-radius: 6px; padding: 2px 8px; }
+    .badge-a { background: #4db8d4; color: #fff; }
+    .badge-b { background: #f5a623; color: #fff; }
 
-    .filter-count { color: rgba(255,255,255,0.4); font-size: 12px; }
-
-    .tabs { display: flex; gap: 4px; }
-    .tab { padding: 9px 20px; border-radius: 10px 10px 0 0; border: none; cursor: pointer; font-weight: 700; font-size: 14px; background: transparent; color: rgba(255,255,255,0.6); transition: all .2s; }
+    /* TABS */
+    .tabs { display: flex; gap: 3px; margin-top: 10px; }
+    .tab { padding: 8px 18px; border-radius: 10px 10px 0 0; border: none; cursor: pointer; font-weight: 700; font-size: 13px; background: transparent; color: rgba(255,255,255,0.55); transition: all .2s; }
     .tab.active { background: #fff; }
     .tab[data-tab="Geral"].active        { color: #1a2744; }
     .tab[data-tab="Social Seller"].active { color: #ea5167; }
     .tab[data-tab="SDR"].active          { color: #4db8d4; }
     .tab[data-tab="Closer"].active       { color: #27ae60; }
 
-    .content { padding: 26px 28px; }
+    /* CONTENT */
+    .content { padding: 22px 28px; }
     .panel { display: none; }
     .panel.active { display: block; }
+    .section { margin-bottom: 24px; }
+    .section-title { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .section-bar { width: 5px; height: 26px; border-radius: 3px; flex-shrink: 0; }
+    .section-title h2 { font-size: 16px; font-weight: 800; }
 
-    .section { margin-bottom: 28px; }
-    .section-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-    .section-bar { width: 5px; height: 28px; border-radius: 3px; flex-shrink: 0; }
-    .section-title h2 { font-size: 17px; font-weight: 800; }
-
-    .kpi-row { display: flex; gap: 14px; flex-wrap: wrap; }
-    .kpi-card { background: #fff; border-radius: 14px; padding: 18px 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); min-width: 150px; flex: 1; }
-    .kpi-label { font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
-    .kpi-value { font-size: 26px; font-weight: 800; }
+    /* KPI CARDS */
+    .kpi-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .kpi-card { background: #fff; border-radius: 14px; padding: 16px 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); min-width: 140px; flex: 1; position: relative; }
+    .kpi-label { font-size: 10px; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+    .kpi-value { font-size: 24px; font-weight: 800; }
     .kpi-meta { margin-top: 8px; }
-    .kpi-meta-row { display: flex; justify-content: space-between; font-size: 11px; color: #aaa; margin-bottom: 3px; }
-    .kpi-bar-bg { background: #eee; border-radius: 99px; height: 5px; }
-    .kpi-bar { height: 5px; border-radius: 99px; transition: width .5s; }
-    .cash-badge { display: inline-flex; align-items: center; gap: 4px; border-radius: 20px; padding: 3px 10px; font-size: 12px; font-weight: 800; color: #fff; margin-top: 8px; }
+    .kpi-meta-row { display: flex; justify-content: space-between; font-size: 10px; color: #aaa; margin-bottom: 3px; }
+    .kpi-bar-bg { background: #eee; border-radius: 99px; height: 4px; }
+    .kpi-bar { height: 4px; border-radius: 99px; transition: width .5s; }
+    .cash-badge { display: inline-flex; align-items: center; gap: 4px; border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 800; color: #fff; margin-top: 7px; }
 
-    .stat-row { display: flex; gap: 14px; flex-wrap: wrap; }
-    .stat-card { background: #fff; border-radius: 14px; padding: 18px 22px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); flex: 1; min-width: 160px; }
-    .stat-label { font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-    .stat-value { font-size: 30px; font-weight: 900; }
-    .stat-desc { font-size: 11px; color: #bbb; margin-top: 2px; }
+    /* COMPARE CARDS */
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .compare-card { background: #fff; border-radius: 12px; padding: 14px 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+    .compare-label { font-size: 10px; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .compare-row { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 12px; }
+    .compare-val { flex: 1; text-align: center; }
+    .compare-val .cv-period { font-size: 10px; font-weight: 800; border-radius: 5px; padding: 1px 7px; margin-bottom: 4px; display: inline-block; }
+    .compare-val .cv-num { font-size: 20px; font-weight: 800; }
+    .compare-diff { text-align: center; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 8px; }
+    .diff-up   { background: #e8f8f0; color: #27ae60; }
+    .diff-down { background: #fef0f2; color: #ea5167; }
+    .diff-eq   { background: #f0f0f0; color: #888; }
 
-    .chart-wrap { background: #fff; border-radius: 14px; padding: 20px 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
-    .chart { display: flex; align-items: flex-end; gap: 4px; height: 150px; padding-top: 10px; }
+    /* STAT CARDS */
+    .stat-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .stat-card { background: #fff; border-radius: 14px; padding: 16px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1; min-width: 150px; }
+    .stat-label { font-size: 10px; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+    .stat-value { font-size: 28px; font-weight: 900; }
+    .stat-desc { font-size: 10px; color: #bbb; margin-top: 2px; }
+
+    /* CHARTS */
+    .chart-wrap { background: #fff; border-radius: 14px; padding: 18px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+    .chart { display: flex; align-items: flex-end; gap: 3px; height: 140px; padding-top: 8px; }
     .chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-    .chart-val { font-size: 9px; color: #888; font-weight: 600; }
+    .chart-val { font-size: 8px; color: #888; font-weight: 600; }
     .chart-bar { width: 100%; border-radius: 4px 4px 0 0; min-height: 2px; opacity: .85; }
-    .chart-lbl { font-size: 8px; color: #aaa; text-align: center; transform: rotate(-35deg); transform-origin: top center; margin-top: 4px; white-space: nowrap; }
+    .chart-lbl { font-size: 7px; color: #aaa; text-align: center; transform: rotate(-35deg); transform-origin: top center; margin-top: 3px; white-space: nowrap; }
 
-    .table-wrap { background: #fff; border-radius: 14px; overflow: auto; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    /* TABLES */
+    .table-wrap { background: #fff; border-radius: 14px; overflow: auto; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
     thead tr { color: #fff; }
-    th { padding: 10px 13px; text-align: left; font-weight: 700; white-space: nowrap; }
-    td { padding: 9px 13px; white-space: nowrap; }
+    th { padding: 9px 12px; text-align: left; font-weight: 700; white-space: nowrap; }
+    td { padding: 8px 12px; white-space: nowrap; }
 
-    .loading { display: flex; align-items: center; justify-content: center; height: 300px; font-size: 16px; color: #aaa; flex-direction: column; gap: 12px; }
-    .spinner { width: 36px; height: 36px; border: 4px solid #eee; border-top-color: #ea5167; border-radius: 50%; animation: spin .8s linear infinite; }
-    .footer { text-align: center; color: #bbb; font-size: 11px; margin-top: 16px; }
+    .loading { display: flex; align-items: center; justify-content: center; height: 300px; font-size: 15px; color: #aaa; flex-direction: column; gap: 12px; }
+    .spinner { width: 34px; height: 34px; border: 4px solid #eee; border-top-color: #ea5167; border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .footer { text-align: center; color: #bbb; font-size: 11px; margin-top: 14px; }
+    .spin { display: inline-block; animation: spin .8s linear infinite; }
   </style>
 </head>
 <body>
-
 <div class="header">
   <div class="header-top">
     <div>
       <div class="header-brand">Fluent Mind Academy</div>
       <div class="header-title">Dashboard Comercial 📊</div>
-      <div class="header-updated" id="last-updated">Carregando dados...</div>
+      <div class="header-updated" id="last-updated">Carregando...</div>
     </div>
-    <div class="filters">
-      <label>📅 De:</label>
-      <input type="date" id="date-from" />
-      <span>até</span>
-      <input type="date" id="date-to" />
-      <button class="btn-clear" onclick="clearDates()">↺ Limpar</button>
-      <button class="btn-refresh" id="btn-refresh" onclick="atualizarDados()">🔄 Atualizar</button>
-      <span class="filter-count" id="filter-count"></span>
+    <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+      <!-- Período Principal (A) -->
+      <div class="controls">
+        <span class="period-badge badge-a" id="badge-a" style="display:none">A</span>
+        <label>📅 De:</label>
+        <input type="date" id="date-from" />
+        <span class="sep">até</span>
+        <input type="date" id="date-to" />
+        <button class="btn btn-ghost" onclick="clearDates()">↺</button>
+        <button class="btn btn-red" id="btn-refresh" onclick="atualizarDados()">🔄 Atualizar</button>
+        <button class="btn btn-blue" id="btn-compare" onclick="toggleComparar()">⚖️ Comparar</button>
+        <span class="filter-count" id="filter-count"></span>
+      </div>
+      <!-- Período B (comparação) -->
+      <div class="compare-bar" id="compare-bar">
+        <span class="period-badge badge-b">B</span>
+        <label>De:</label>
+        <input type="date" id="date-from-b" />
+        <span class="sep">até</span>
+        <input type="date" id="date-to-b" />
+        <button class="btn btn-ghost" onclick="clearDatesB()">↺</button>
+        <span class="filter-count" id="filter-count-b"></span>
+      </div>
     </div>
   </div>
   <div class="tabs">
@@ -122,34 +149,21 @@
 </div>
 
 <div class="content">
-  <div id="loading" class="loading">
-    <div class="spinner"></div>
-    <span>Carregando dados do Supabase...</span>
-  </div>
+  <div id="loading" class="loading"><div class="spinner"></div><span>Carregando...</span></div>
 
-  <!-- GERAL -->
+  <!-- ══ GERAL ══ -->
   <div class="panel active" id="panel-Geral">
     <div class="section">
       <div class="section-title"><div class="section-bar" style="background:#1a2744"></div><h2>Visão Geral</h2></div>
-      <div class="kpi-row">
-        <div class="kpi-card" style="border-top:4px solid #1a2744"><div class="kpi-label">💰 Faturamento Total</div><div class="kpi-value" id="g-fat-total">—</div></div>
-        <div class="kpi-card" style="border-top:4px solid #1a2744"><div class="kpi-label">💵 Cash Collected Total</div><div class="kpi-value" id="g-cash-total">—</div><div id="g-cash-badge"></div></div>
-        <div class="kpi-card" style="border-top:4px solid #ea5167"><div class="kpi-label">📲 Ativações SS</div><div class="kpi-value" id="g-ss-atv">—</div><div class="kpi-meta" id="g-ss-atv-meta"></div></div>
-        <div class="kpi-card" style="border-top:4px solid #4db8d4"><div class="kpi-label">📅 Agendamentos Closer</div><div class="kpi-value" id="g-cl-agend">—</div><div class="kpi-meta" id="g-cl-agend-meta"></div></div>
-        <div class="kpi-card" style="border-top:4px solid #27ae60"><div class="kpi-label">📞 Calls Realizadas</div><div class="kpi-value" id="g-cl-real">—</div></div>
-        <div class="kpi-card" style="border-top:4px solid #f5a623"><div class="kpi-label">🏆 Vendas (Closer)</div><div class="kpi-value" id="g-cl-vendas">—</div><div class="kpi-meta" id="g-cl-vendas-meta"></div></div>
-      </div>
+      <div class="kpi-row" id="kpi-geral"></div>
     </div>
     <div class="section">
       <div class="section-title"><div class="section-bar" style="background:#f5a623"></div><h2>Conversão do Funil</h2></div>
-      <div class="stat-row">
-        <div class="stat-card" style="border-top:4px solid #f5a623"><div class="stat-label">Taxa de Show</div><div class="stat-value" style="color:#f5a623" id="g-show-rate">—</div><div class="stat-desc">Agendadas → Realizadas</div></div>
-        <div class="stat-card" style="border-top:4px solid #f5a623"><div class="stat-label">Taxa de Fechamento</div><div class="stat-value" style="color:#f5a623" id="g-close-rate">—</div><div class="stat-desc">Realizadas → Vendas</div></div>
-        <div class="stat-card" style="border-top:4px solid #f5a623"><div class="stat-label">No-Show Closer</div><div class="stat-value" style="color:#f5a623" id="g-noshow">—</div></div>
-        <div class="stat-card" style="border-top:4px solid #f5a623"><div class="stat-label">Em Negociação</div><div class="stat-value" style="color:#f5a623" id="g-neg">—</div></div>
-        <div class="stat-card" style="border-top:4px solid #f5a623"><div class="stat-label">Recusou</div><div class="stat-value" style="color:#f5a623" id="g-rec">—</div></div>
-        <div class="stat-card" style="border-top:4px solid #f5a623"><div class="stat-label">Leads SS→SDR</div><div class="stat-value" style="color:#f5a623" id="g-ss-lead">—</div></div>
-      </div>
+      <div class="stat-row" id="stat-geral"></div>
+    </div>
+    <div class="section" id="section-compare-geral" style="display:none">
+      <div class="section-title"><div class="section-bar" style="background:#4db8d4"></div><h2>Comparativo A vs B</h2></div>
+      <div class="compare-grid" id="compare-geral"></div>
     </div>
     <div class="section">
       <div class="section-title"><div class="section-bar" style="background:#4db8d4"></div><h2>Faturamento por Dia</h2></div>
@@ -157,102 +171,79 @@
     </div>
   </div>
 
-  <!-- SOCIAL SELLER -->
+  <!-- ══ SOCIAL SELLER ══ -->
   <div class="panel" id="panel-Social Seller">
     <div class="section">
       <div class="section-title"><div class="section-bar" style="background:#ea5167"></div><h2>Social Seller — Ativação e Conversão</h2></div>
-      <div class="kpi-row">
-        <div class="kpi-card" style="border-top:4px solid #ea5167"><div class="kpi-label">📲 Ativações</div><div class="kpi-value" id="ss-atv">—</div><div class="kpi-meta" id="ss-atv-meta"></div></div>
-        <div class="kpi-card" style="border-top:4px solid #ea5167"><div class="kpi-label">🎯 Leads → SDR</div><div class="kpi-value" id="ss-lead">—</div><div class="kpi-meta" id="ss-lead-meta"></div></div>
-        <div class="kpi-card" style="border-top:4px solid #ea5167"><div class="kpi-label">💰 Faturamento Método</div><div class="kpi-value" id="ss-fat">—</div><div class="kpi-meta" id="ss-fat-meta"></div></div>
-        <div class="kpi-card" style="border-top:4px solid #ea5167"><div class="kpi-label">💵 Cash Collected</div><div class="kpi-value" id="ss-cash">—</div><div id="ss-cash-badge"></div><div class="kpi-meta" id="ss-cash-meta"></div></div>
-        <div class="kpi-card" style="border-top:4px solid #ea5167"><div class="kpi-label">🏷️ Vendas Método</div><div class="kpi-value" id="ss-vendas">—</div><div class="kpi-meta" id="ss-vendas-meta"></div></div>
-      </div>
+      <div class="kpi-row" id="kpi-ss"></div>
     </div>
     <div class="section">
       <div class="section-title"><div class="section-bar" style="background:#ea5167"></div><h2>Taxas SS</h2></div>
-      <div class="stat-row">
-        <div class="stat-card" style="border-top:4px solid #ea5167"><div class="stat-label">Conv. Ativação→Lead</div><div class="stat-value" style="color:#ea5167" id="ss-conv">—</div></div>
-        <div class="stat-card" style="border-top:4px solid #ea5167"><div class="stat-label">Total Ativações</div><div class="stat-value" style="color:#ea5167" id="ss-atv2">—</div></div>
-        <div class="stat-card" style="border-top:4px solid #ea5167"><div class="stat-label">Total Leads</div><div class="stat-value" style="color:#ea5167" id="ss-lead2">—</div></div>
-      </div>
+      <div class="stat-row" id="stat-ss"></div>
+    </div>
+    <div class="section" id="section-compare-ss" style="display:none">
+      <div class="section-title"><div class="section-bar" style="background:#ea5167"></div><h2>Comparativo A vs B</h2></div>
+      <div class="compare-grid" id="compare-ss"></div>
     </div>
     <div class="section">
       <div class="section-title"><div class="section-bar" style="background:#ea5167"></div><h2>Ativações por Dia</h2></div>
       <div class="chart-wrap"><div class="chart" id="chart-ss"></div></div>
     </div>
     <div class="section">
-      <div class="section-title"><div class="section-bar" style="background:#ea5167"></div><h2>Histórico Diário — Social Seller</h2></div>
-      <div class="table-wrap"><table><thead><tr style="background:#ea5167"><th>Dia</th><th>Data</th><th>S</th><th>Ativações</th><th>Leads SDR</th><th>Faturamento</th><th>Cash</th></tr></thead><tbody id="tbody-ss"></tbody></table></div>
+      <div class="section-title"><div class="section-bar" style="background:#ea5167"></div><h2>Histórico Diário</h2></div>
+      <div class="table-wrap"><table><thead><tr style="background:#ea5167"><th>Dia</th><th>Data</th><th>Ativações</th><th>Leads SDR</th><th>Faturamento</th><th>Cash</th></tr></thead><tbody id="tbody-ss"></tbody></table></div>
     </div>
   </div>
 
-  <!-- SDR -->
+  <!-- ══ SDR ══ -->
   <div class="panel" id="panel-SDR">
     <div class="section">
       <div class="section-title"><div class="section-bar" style="background:#4db8d4"></div><h2>SDR — Qualificação</h2></div>
-      <div class="kpi-row">
-        <div class="kpi-card" style="border-top:4px solid #4db8d4"><div class="kpi-label">📅 Agendamentos</div><div class="kpi-value" id="sdr-agend">—</div><div class="kpi-meta" id="sdr-agend-meta"></div></div>
-        <div class="kpi-card" style="border-top:4px solid #4db8d4"><div class="kpi-label">❌ No-Shows SDR</div><div class="kpi-value" id="sdr-noshow">—</div></div>
-        <div class="kpi-card" style="border-top:4px solid #4db8d4"><div class="kpi-label">📞 Lig. Realizadas</div><div class="kpi-value" id="sdr-lig">—</div><div class="kpi-meta" id="sdr-lig-meta"></div></div>
-        <div class="kpi-card" style="border-top:4px solid #4db8d4"><div class="kpi-label">✅ Lig. Atendidas</div><div class="kpi-value" id="sdr-atend">—</div><div class="kpi-meta" id="sdr-atend-meta"></div></div>
-        <div class="kpi-card" style="border-top:4px solid #4db8d4"><div class="kpi-label">🏷️ Vendas Método</div><div class="kpi-value" id="sdr-vendas">—</div><div class="kpi-meta" id="sdr-vendas-meta"></div></div>
-      </div>
+      <div class="kpi-row" id="kpi-sdr"></div>
     </div>
     <div class="section">
       <div class="section-title"><div class="section-bar" style="background:#4db8d4"></div><h2>Eficiência SDR</h2></div>
-      <div class="stat-row">
-        <div class="stat-card" style="border-top:4px solid #4db8d4"><div class="stat-label">Taxa Atendimento</div><div class="stat-value" style="color:#4db8d4" id="sdr-taxa-atend">—</div></div>
-        <div class="stat-card" style="border-top:4px solid #4db8d4"><div class="stat-label">Taxa No-Show SDR</div><div class="stat-value" style="color:#4db8d4" id="sdr-taxa-noshow">—</div></div>
-        <div class="stat-card" style="border-top:4px solid #4db8d4"><div class="stat-label">Conv. Atend→Venda</div><div class="stat-value" style="color:#4db8d4" id="sdr-conv-venda">—</div></div>
-        <div class="stat-card" style="border-top:4px solid #4db8d4"><div class="stat-label">Conv. Atend→Agend</div><div class="stat-value" style="color:#4db8d4" id="sdr-conv-agend">—</div></div>
-      </div>
+      <div class="stat-row" id="stat-sdr"></div>
+    </div>
+    <div class="section" id="section-compare-sdr" style="display:none">
+      <div class="section-title"><div class="section-bar" style="background:#4db8d4"></div><h2>Comparativo A vs B</h2></div>
+      <div class="compare-grid" id="compare-sdr"></div>
     </div>
     <div class="section">
       <div class="section-title"><div class="section-bar" style="background:#4db8d4"></div><h2>Agendamentos por Dia</h2></div>
       <div class="chart-wrap"><div class="chart" id="chart-sdr"></div></div>
     </div>
     <div class="section">
-      <div class="section-title"><div class="section-bar" style="background:#4db8d4"></div><h2>Histórico Diário — SDR</h2></div>
-      <div class="table-wrap"><table><thead><tr style="background:#4db8d4"><th>Dia</th><th>Data</th><th>S</th><th>Agend.</th><th>No-Show</th><th>Lig. Real.</th><th>Lig. Atend.</th><th>Vendas</th></tr></thead><tbody id="tbody-sdr"></tbody></table></div>
+      <div class="section-title"><div class="section-bar" style="background:#4db8d4"></div><h2>Histórico Diário</h2></div>
+      <div class="table-wrap"><table><thead><tr style="background:#4db8d4"><th>Dia</th><th>Data</th><th>Agend.</th><th>No-Show</th><th>Lig. Real.</th><th>Lig. Atend.</th><th>Vendas</th></tr></thead><tbody id="tbody-sdr"></tbody></table></div>
     </div>
   </div>
 
-  <!-- CLOSER -->
+  <!-- ══ CLOSER ══ -->
   <div class="panel" id="panel-Closer">
     <div class="section">
       <div class="section-title"><div class="section-bar" style="background:#27ae60"></div><h2>Closer — Vendas Mentoria</h2></div>
-      <div class="kpi-row">
-        <div class="kpi-card" style="border-top:4px solid #27ae60"><div class="kpi-label">📅 Calls Agendadas</div><div class="kpi-value" id="cl-agend">—</div><div class="kpi-meta" id="cl-agend-meta"></div></div>
-        <div class="kpi-card" style="border-top:4px solid #27ae60"><div class="kpi-label">✅ Calls Realizadas</div><div class="kpi-value" id="cl-real">—</div></div>
-        <div class="kpi-card" style="border-top:4px solid #27ae60"><div class="kpi-label">❌ No-Shows</div><div class="kpi-value" id="cl-noshow">—</div></div>
-        <div class="kpi-card" style="border-top:4px solid #27ae60"><div class="kpi-label">🏆 Vendas</div><div class="kpi-value" id="cl-vendas">—</div><div class="kpi-meta" id="cl-vendas-meta"></div></div>
-        <div class="kpi-card" style="border-top:4px solid #f5a623"><div class="kpi-label">🤝 Em Negociação</div><div class="kpi-value" id="cl-neg">—</div></div>
-        <div class="kpi-card" style="border-top:4px solid #ea5167"><div class="kpi-label">🚫 Recusou</div><div class="kpi-value" id="cl-rec">—</div></div>
-      </div>
+      <div class="kpi-row" id="kpi-closer"></div>
     </div>
     <div class="section">
       <div class="section-title"><div class="section-bar" style="background:#27ae60"></div><h2>Financeiro Closer</h2></div>
-      <div class="kpi-row">
-        <div class="kpi-card" style="border-top:4px solid #27ae60"><div class="kpi-label">💰 Faturamento Mentoria</div><div class="kpi-value" id="cl-fat">—</div><div class="kpi-meta" id="cl-fat-meta"></div></div>
-        <div class="kpi-card" style="border-top:4px solid #27ae60"><div class="kpi-label">💵 Cash Collected</div><div class="kpi-value" id="cl-cash">—</div><div id="cl-cash-badge"></div><div class="kpi-meta" id="cl-cash-meta"></div></div>
-      </div>
+      <div class="kpi-row" id="kpi-closer-fin"></div>
     </div>
     <div class="section">
       <div class="section-title"><div class="section-bar" style="background:#27ae60"></div><h2>Taxas de Conversão</h2></div>
-      <div class="stat-row">
-        <div class="stat-card" style="border-top:4px solid #27ae60"><div class="stat-label">Taxa de Show</div><div class="stat-value" style="color:#27ae60" id="cl-show-rate">—</div><div class="stat-desc">Agendadas → Realizadas</div></div>
-        <div class="stat-card" style="border-top:4px solid #27ae60"><div class="stat-label">Taxa de Fechamento</div><div class="stat-value" style="color:#27ae60" id="cl-close-rate">—</div><div class="stat-desc">Realizadas → Vendas</div></div>
-        <div class="stat-card" style="border-top:4px solid #27ae60"><div class="stat-label">Taxa No-Show</div><div class="stat-value" style="color:#27ae60" id="cl-noshow-rate">—</div><div class="stat-desc">Agendadas → No-Show</div></div>
-      </div>
+      <div class="stat-row" id="stat-closer"></div>
+    </div>
+    <div class="section" id="section-compare-closer" style="display:none">
+      <div class="section-title"><div class="section-bar" style="background:#27ae60"></div><h2>Comparativo A vs B</h2></div>
+      <div class="compare-grid" id="compare-closer"></div>
     </div>
     <div class="section">
       <div class="section-title"><div class="section-bar" style="background:#27ae60"></div><h2>Faturamento por Dia</h2></div>
       <div class="chart-wrap"><div class="chart" id="chart-closer"></div></div>
     </div>
     <div class="section">
-      <div class="section-title"><div class="section-bar" style="background:#27ae60"></div><h2>Histórico Diário — Closer</h2></div>
-      <div class="table-wrap"><table><thead><tr style="background:#27ae60"><th>Dia</th><th>Data</th><th>S</th><th>Agend.</th><th>Realiz.</th><th>No-Show</th><th>Vendas</th><th>Neg.</th><th>Recusou</th><th>Faturamento</th><th>Cash</th></tr></thead><tbody id="tbody-closer"></tbody></table></div>
+      <div class="section-title"><div class="section-bar" style="background:#27ae60"></div><h2>Histórico Diário</h2></div>
+      <div class="table-wrap"><table><thead><tr style="background:#27ae60"><th>Dia</th><th>Data</th><th>Agend.</th><th>Realiz.</th><th>No-Show</th><th>Vendas</th><th>Neg.</th><th>Recusou</th><th>Faturamento</th><th>Cash</th></tr></thead><tbody id="tbody-closer"></tbody></table></div>
     </div>
   </div>
 
@@ -260,210 +251,320 @@
 </div>
 
 <script>
-// ── CONFIG SUPABASE ───────────────────────────────────────────
+// ── CONFIG ────────────────────────────────────────────────────
 const SUPABASE_URL = 'https://znazewysjyssjuqmasea.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuYXpld3lzanlzc2p1cW1hc2VhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2Mzg1NTUsImV4cCI6MjA5NzIxNDU1NX0.KgObQOJXiA_vvIU996fMJqTNUxxklnvA0NC5StVLnV8';
-const WEBAPP_URL  = 'https://script.google.com/macros/s/AKfycbzyXXWPO6W1EvIvzpAxKmB3NPy3xgNT_hXqGv_HuVJjqZ3l5m15ttKP6wZRvkX121CI/exec';
+const WEBAPP_URL   = 'https://script.google.com/macros/s/AKfycbzyXXWPO6W1EvIvzpAxKmB3NPy3xgNT_hXqGv_HuVJjqZ3l5m15ttKP6wZRvkX121CI/exec';
 
-const METAS = {
-  ss_atv:900, ss_lead:60,
-  sdr_agend:75, sdr_lig:450, sdr_atend:150, sdr_vendas:12,
-  closer_agend:15, closer_vendas:15,
-  closer_fat:100000, closer_cash:80000,
-  ss_fat:34000, ss_cash:27200,
-};
-
-const fmt = v => (v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-const pct = (v,t) => t>0 ? Math.round(v/t*100) : 0;
-const num = v => (v||0).toLocaleString('pt-BR');
-const $   = id => document.getElementById(id);
+// ── HELPERS ───────────────────────────────────────────────────
+const fmt  = v => (v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const pct  = (v,t) => t>0 ? Math.round(v/t*100) : 0;
+const num  = v => (v||0).toLocaleString('pt-BR');
+const $    = id => document.getElementById(id);
+const isoToBR = s => s ? s.split('-').reverse().join('/') : '';
 
 function cashColor(p) { return p>=80?'#27ae60':p>=50?'#f5a623':'#ea5167'; }
 function cashEmoji(p) { return p>=80?'🟢':p>=50?'🟡':'🔴'; }
 
-function metaHtml(value, meta, isMonetary) {
-  if (!meta) return '';
-  const p = pct(value, meta);
+// ── ESTADO ───────────────────────────────────────────────────
+let allData=[], metas=[], minDate='', maxDate='';
+let filteredA=[], filteredB=[];
+let comparando=false;
+
+// ── METAS: busca meta do mês para o período ──────────────────
+function getMeta(campo, from, to) {
+  if (!metas.length || !from) return null;
+  // Usa o mês do início do período
+  const mes = from.slice(0,7) + '-01';
+  const m = metas.find(x => x.mes === mes);
+  if (!m) return null;
+  const v = m[campo];
+  return (v !== null && v !== undefined && v !== 0) ? v : null;
+}
+
+// ── RENDERIZA META (barra de progresso) ──────────────────────
+function metaHtml(valor, meta, isMonetary) {
+  if (meta === null || meta === undefined) return '';
+  const p = pct(valor, meta);
   const c = p>=100?'#27ae60':p>=60?'#f5a623':'#ea5167';
   return `<div class="kpi-meta">
-    <div class="kpi-meta-row"><span>Meta: ${isMonetary?fmt(meta):meta}</span><span style="color:${c};font-weight:700">${p}%</span></div>
+    <div class="kpi-meta-row"><span>Meta: ${isMonetary?fmt(meta):num(meta)}</span><span style="color:${c};font-weight:800">${p}%</span></div>
     <div class="kpi-bar-bg"><div class="kpi-bar" style="background:${c};width:${Math.min(p,100)}%"></div></div>
   </div>`;
 }
 
-function cashBadge(cash, fat, elId) {
+// ── KPI CARD ─────────────────────────────────────────────────
+function kpiCard(label, valor, accentColor, meta, isMonetary, extra) {
+  return `<div class="kpi-card" style="border-top:4px solid ${accentColor}">
+    <div class="kpi-label">${label}</div>
+    <div class="kpi-value">${isMonetary?fmt(valor):num(valor)}</div>
+    ${extra||''}
+    ${metaHtml(valor, meta, isMonetary)}
+  </div>`;
+}
+
+// ── STAT CARD ─────────────────────────────────────────────────
+function statCard(label, valor, accentColor, desc) {
+  return `<div class="stat-card" style="border-top:4px solid ${accentColor}">
+    <div class="stat-label">${label}</div>
+    <div class="stat-value" style="color:${accentColor}">${valor}</div>
+    ${desc?`<div class="stat-desc">${desc}</div>`:''}
+  </div>`;
+}
+
+// ── CASH BADGE ───────────────────────────────────────────────
+function cashBadgeHtml(cash, fat) {
+  if (!fat) return '';
   const p = pct(cash, fat);
-  const el = $(elId);
-  if (!el) return;
-  el.innerHTML = fat>0 ? `<div class="cash-badge" style="background:${cashColor(p)}">${cashEmoji(p)} ${p}% do faturado</div>` : '';
+  return `<div class="cash-badge" style="background:${cashColor(p)}">${cashEmoji(p)} ${p}% do faturado</div>`;
 }
 
-// ── STATE ─────────────────────────────────────────────────────
-let allData = [], filtered = [], minDate = '', maxDate = '';
+// ── SOMA DE CAMPO ─────────────────────────────────────────────
+function sum(data, key) { return data.reduce((a,d) => a+(parseFloat(d[key])||0), 0); }
 
-function switchTab(btn) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  $('panel-' + btn.dataset.tab).classList.add('active');
+// ── COMPARAÇÃO CARD ──────────────────────────────────────────
+function compareCard(label, vA, vB, isMonetary) {
+  const fmtV = v => isMonetary ? fmt(v) : num(v);
+  const diff = vB - vA;
+  const pctDiff = vA > 0 ? Math.round((diff/vA)*100) : (vB>0?100:0);
+  const cls  = diff>0?'diff-up':diff<0?'diff-down':'diff-eq';
+  const sign = diff>0?'▲ +':diff<0?'▼ ':'= ';
+  const diffTxt = isMonetary
+    ? `${sign}${fmt(Math.abs(diff))} (${Math.abs(pctDiff)}%)`
+    : `${sign}${num(Math.abs(diff))} (${Math.abs(pctDiff)}%)`;
+  return `<div class="compare-card">
+    <div class="compare-label">${label}</div>
+    <div class="compare-row">
+      <div class="compare-val">
+        <div class="cv-period badge-a" style="background:#4db8d4;color:#fff;font-size:9px;font-weight:800;border-radius:5px;padding:1px 7px;margin-bottom:3px;display:inline-block">A</div>
+        <div class="cv-num">${fmtV(vA)}</div>
+      </div>
+      <div class="compare-val">
+        <div class="cv-period badge-b" style="background:#f5a623;color:#fff;font-size:9px;font-weight:800;border-radius:5px;padding:1px 7px;margin-bottom:3px;display:inline-block">B</div>
+        <div class="cv-num">${fmtV(vB)}</div>
+      </div>
+    </div>
+    <div class="compare-diff ${cls}">${diffTxt}</div>
+  </div>`;
 }
 
-function applyFilter() {
-  const from = $('date-from').value || minDate;
-  const to   = $('date-to').value   || maxDate;
-  filtered = allData.filter(d => d.date >= from && d.date <= to);
-  $('filter-count').textContent = filtered.length + ' dia' + (filtered.length!==1?'s':'');
-  render();
+// ── CHART ────────────────────────────────────────────────────
+function renderChart(elId, data, accessor, color) {
+  const el = $(elId); if (!el) return;
+  const max = Math.max(...data.map(accessor), 1);
+  const H = 110;
+  el.innerHTML = data.map(d => {
+    const v = parseFloat(accessor(d))||0;
+    const h = Math.max(Math.round((v/max)*H),2);
+    const lbl = d.date ? d.date.slice(5).split('-').reverse().join('/') : '';
+    return `<div class="chart-col">
+      <div class="chart-val">${v>999?(v/1000).toFixed(1)+'k':v}</div>
+      <div class="chart-bar" style="height:${h}px;background:${color}"></div>
+      <div class="chart-lbl">${lbl}</div>
+    </div>`;
+  }).join('');
 }
 
-function clearDates() {
-  $('date-from').value = minDate;
-  $('date-to').value   = maxDate;
-  applyFilter();
-}
+// ── RENDER PRINCIPAL ─────────────────────────────────────────
+function render() {
+  const fromA = $('date-from').value || minDate;
+  const toA   = $('date-to').value   || maxDate;
+  filteredA = allData.filter(d => d.date >= fromA && d.date <= toA);
+  $('filter-count').textContent = filteredA.length + ' dia' + (filteredA.length!==1?'s':'');
 
-$('date-from').addEventListener('change', applyFilter);
-$('date-to').addEventListener('change',   applyFilter);
-
-function sum(key) { return filtered.reduce((a,d) => a+(parseFloat(d[key])||0), 0); }
-
-// ── BOTÃO ATUALIZAR ───────────────────────────────────────────
-async function atualizarDados() {
-  const btn = $('btn-refresh');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spin">🔄</span> Sincronizando...';
-
-  try {
-    // Chama o Apps Script para sincronizar a planilha → Supabase
-    await fetch(WEBAPP_URL, { mode: 'no-cors' });
-    // Aguarda 4s para o sync concluir
-    await new Promise(r => setTimeout(r, 4000));
-    // Recarrega os dados do Supabase
-    await loadData();
-    btn.innerHTML = '✅ Atualizado!';
-  } catch(e) {
-    btn.innerHTML = '❌ Erro';
+  if (comparando) {
+    const fromB = $('date-from-b').value || minDate;
+    const toB   = $('date-to-b').value   || maxDate;
+    filteredB = allData.filter(d => d.date >= fromB && d.date <= toB);
+    $('filter-count-b').textContent = filteredB.length + ' dia' + (filteredB.length!==1?'s':'');
   }
 
-  setTimeout(() => {
-    btn.innerHTML = '🔄 Atualizar';
-    btn.disabled = false;
-  }, 3000);
+  renderGeral(fromA, toA);
+  renderSS(fromA, toA);
+  renderSDR(fromA, toA);
+  renderCloser(fromA, toA);
 }
 
-function render() {
-  const k = {
-    ss_atv:sum('ss_atv'), ss_lead:sum('ss_lead'),
-    sdr_agend:sum('sdr_agend'), sdr_noshow:sum('sdr_noshow'),
-    sdr_lig:sum('sdr_lig'), sdr_atend:sum('sdr_atend'), sdr_vendas:sum('sdr_vendas'),
-    ss_fat:sum('ss_fat'), ss_cash:sum('ss_cash'),
-    cl_agend:sum('closer_agend'), cl_real:sum('closer_real'),
-    cl_noshow:sum('closer_noshow'), cl_vendas:sum('closer_vendas'),
-    cl_neg:sum('closer_neg'), cl_rec:sum('closer_rec'),
-    cl_fat:sum('closer_fat'), cl_cash:sum('closer_cash'),
-  };
-  const totalFat = k.ss_fat + k.cl_fat;
-  const totalCash= k.ss_cash + k.cl_cash;
+function kA(key) { return sum(filteredA, key); }
+function kB(key) { return sum(filteredB, key); }
 
-  // GERAL
-  $('g-fat-total').textContent    = fmt(totalFat);
-  $('g-cash-total').textContent   = fmt(totalCash);
-  cashBadge(totalCash, totalFat, 'g-cash-badge');
-  $('g-ss-atv').textContent       = num(k.ss_atv);
-  $('g-ss-atv-meta').innerHTML    = metaHtml(k.ss_atv, METAS.ss_atv, false);
-  $('g-cl-agend').textContent     = num(k.cl_agend);
-  $('g-cl-agend-meta').innerHTML  = metaHtml(k.cl_agend, METAS.closer_agend, false);
-  $('g-cl-real').textContent      = num(k.cl_real);
-  $('g-cl-vendas').textContent    = num(k.cl_vendas);
-  $('g-cl-vendas-meta').innerHTML = metaHtml(k.cl_vendas, METAS.closer_vendas, false);
-  $('g-show-rate').textContent    = pct(k.cl_real, k.cl_agend) + '%';
-  $('g-close-rate').textContent   = pct(k.cl_vendas, k.cl_real) + '%';
-  $('g-noshow').textContent       = num(k.cl_noshow);
-  $('g-neg').textContent          = num(k.cl_neg);
-  $('g-rec').textContent          = num(k.cl_rec);
-  $('g-ss-lead').textContent      = num(k.ss_lead);
+function renderGeral(from, to) {
+  const mss_fat  = getMeta('ss_fat',  from, to);
+  const mss_cash = getMeta('ss_cash', from, to);
+  const mcl_fat  = getMeta('closer_fat',  from, to);
+  const mcl_cash = getMeta('closer_cash', from, to);
+  const mss_atv  = getMeta('ss_atv',  from, to);
+  const mcl_ag   = getMeta('closer_agend',  from, to);
+  const mcl_v    = getMeta('closer_vendas', from, to);
 
-  // SS
-  $('ss-atv').textContent       = num(k.ss_atv);
-  $('ss-atv-meta').innerHTML    = metaHtml(k.ss_atv, METAS.ss_atv, false);
-  $('ss-lead').textContent      = num(k.ss_lead);
-  $('ss-lead-meta').innerHTML   = metaHtml(k.ss_lead, METAS.ss_lead, false);
-  $('ss-fat').textContent       = fmt(k.ss_fat);
-  $('ss-fat-meta').innerHTML    = metaHtml(k.ss_fat, METAS.ss_fat, true);
-  $('ss-cash').textContent      = fmt(k.ss_cash);
-  $('ss-cash-meta').innerHTML   = metaHtml(k.ss_cash, METAS.ss_cash, true);
-  cashBadge(k.ss_cash, k.ss_fat, 'ss-cash-badge');
-  $('ss-vendas').textContent    = num(k.sdr_vendas);
-  $('ss-vendas-meta').innerHTML = metaHtml(k.sdr_vendas, METAS.sdr_vendas, false);
-  $('ss-conv').textContent      = pct(k.ss_lead, k.ss_atv) + '%';
-  $('ss-atv2').textContent      = num(k.ss_atv);
-  $('ss-lead2').textContent     = num(k.ss_lead);
+  const totalFat  = kA('ss_fat')  + kA('closer_fat');
+  const totalCash = kA('ss_cash') + kA('closer_cash');
+  const mTotalFat  = (mss_fat||0)+(mcl_fat||0)||null;
+  const mTotalCash = (mss_cash||0)+(mcl_cash||0)||null;
 
-  // SDR
-  $('sdr-agend').textContent        = num(k.sdr_agend);
-  $('sdr-agend-meta').innerHTML     = metaHtml(k.sdr_agend, METAS.sdr_agend, false);
-  $('sdr-noshow').textContent       = num(k.sdr_noshow);
-  $('sdr-lig').textContent          = num(k.sdr_lig);
-  $('sdr-lig-meta').innerHTML       = metaHtml(k.sdr_lig, METAS.sdr_lig, false);
-  $('sdr-atend').textContent        = num(k.sdr_atend);
-  $('sdr-atend-meta').innerHTML     = metaHtml(k.sdr_atend, METAS.sdr_atend, false);
-  $('sdr-vendas').textContent       = num(k.sdr_vendas);
-  $('sdr-vendas-meta').innerHTML    = metaHtml(k.sdr_vendas, METAS.sdr_vendas, false);
-  $('sdr-taxa-atend').textContent   = pct(k.sdr_atend, k.sdr_lig) + '%';
-  $('sdr-taxa-noshow').textContent  = pct(k.sdr_noshow, k.sdr_agend) + '%';
-  $('sdr-conv-venda').textContent   = pct(k.sdr_vendas, k.sdr_atend) + '%';
-  $('sdr-conv-agend').textContent   = pct(k.sdr_agend, k.sdr_atend) + '%';
+  $('kpi-geral').innerHTML =
+    kpiCard('💰 Faturamento Total', totalFat, '#1a2744', mTotalFat, true, '') +
+    kpiCard('💵 Cash Collected Total', totalCash, '#1a2744', mTotalCash, true, cashBadgeHtml(totalCash, totalFat)) +
+    kpiCard('📲 Ativações SS', kA('ss_atv'), '#ea5167', mss_atv, false, '') +
+    kpiCard('📅 Agendamentos Closer', kA('closer_agend'), '#4db8d4', mcl_ag, false, '') +
+    kpiCard('📞 Calls Realizadas', kA('closer_real'), '#27ae60', null, false, '') +
+    kpiCard('🏆 Vendas (Closer)', kA('closer_vendas'), '#f5a623', mcl_v, false, '');
 
-  // CLOSER
-  $('cl-agend').textContent      = num(k.cl_agend);
-  $('cl-agend-meta').innerHTML   = metaHtml(k.cl_agend, METAS.closer_agend, false);
-  $('cl-real').textContent       = num(k.cl_real);
-  $('cl-noshow').textContent     = num(k.cl_noshow);
-  $('cl-vendas').textContent     = num(k.cl_vendas);
-  $('cl-vendas-meta').innerHTML  = metaHtml(k.cl_vendas, METAS.closer_vendas, false);
-  $('cl-neg').textContent        = num(k.cl_neg);
-  $('cl-rec').textContent        = num(k.cl_rec);
-  $('cl-fat').textContent        = fmt(k.cl_fat);
-  $('cl-fat-meta').innerHTML     = metaHtml(k.cl_fat, METAS.closer_fat, true);
-  $('cl-cash').textContent       = fmt(k.cl_cash);
-  $('cl-cash-meta').innerHTML    = metaHtml(k.cl_cash, METAS.closer_cash, true);
-  cashBadge(k.cl_cash, k.cl_fat, 'cl-cash-badge');
-  $('cl-show-rate').textContent  = pct(k.cl_real, k.cl_agend) + '%';
-  $('cl-close-rate').textContent = pct(k.cl_vendas, k.cl_real) + '%';
-  $('cl-noshow-rate').textContent= pct(k.cl_noshow, k.cl_agend) + '%';
+  $('stat-geral').innerHTML =
+    statCard('Taxa de Show', pct(kA('closer_real'),kA('closer_agend'))+'%', '#f5a623', 'Agendadas → Realizadas') +
+    statCard('Taxa de Fechamento', pct(kA('closer_vendas'),kA('closer_real'))+'%', '#f5a623', 'Realizadas → Vendas') +
+    statCard('No-Show Closer', num(kA('closer_noshow')), '#f5a623') +
+    statCard('Em Negociação', num(kA('closer_neg')), '#f5a623') +
+    statCard('Recusou', num(kA('closer_rec')), '#f5a623') +
+    statCard('Leads SS→SDR', num(kA('ss_lead')), '#f5a623');
 
-  // CHARTS
-  renderChart('chart-geral',  d => d.closer_fat,  '#4db8d4');
-  renderChart('chart-ss',     d => d.ss_atv,      '#ea5167');
-  renderChart('chart-sdr',    d => d.sdr_agend,   '#4db8d4');
-  renderChart('chart-closer', d => d.closer_fat,  '#27ae60');
+  if (comparando) {
+    $('section-compare-geral').style.display='block';
+    const tFatB  = kB('ss_fat')+kB('closer_fat');
+    const tCashB = kB('ss_cash')+kB('closer_cash');
+    $('compare-geral').innerHTML =
+      compareCard('💰 Faturamento Total', totalFat, tFatB, true) +
+      compareCard('💵 Cash Collected', totalCash, tCashB, true) +
+      compareCard('📲 Ativações SS', kA('ss_atv'), kB('ss_atv'), false) +
+      compareCard('📅 Agend. Closer', kA('closer_agend'), kB('closer_agend'), false) +
+      compareCard('📞 Calls Realizadas', kA('closer_real'), kB('closer_real'), false) +
+      compareCard('🏆 Vendas Closer', kA('closer_vendas'), kB('closer_vendas'), false);
+  } else {
+    $('section-compare-geral').style.display='none';
+  }
 
-  // TABLES
-  const isoToBR = s => s ? s.split('-').reverse().join('/') : '';
-  $('tbody-ss').innerHTML = filtered.map((d,i) => `
+  renderChart('chart-geral', filteredA, d=>d.closer_fat, '#4db8d4');
+}
+
+function renderSS(from, to) {
+  const matv  = getMeta('ss_atv',  from, to);
+  const mlead = getMeta('ss_lead', from, to);
+  const mfat  = getMeta('ss_fat',  from, to);
+  const mcash = getMeta('ss_cash', from, to);
+  const mven  = getMeta('sdr_vendas', from, to);
+
+  $('kpi-ss').innerHTML =
+    kpiCard('📲 Ativações', kA('ss_atv'), '#ea5167', matv, false, '') +
+    kpiCard('🎯 Leads → SDR', kA('ss_lead'), '#ea5167', mlead, false, '') +
+    kpiCard('💰 Faturamento Método', kA('ss_fat'), '#ea5167', mfat, true, '') +
+    kpiCard('💵 Cash Collected', kA('ss_cash'), '#ea5167', mcash, true, cashBadgeHtml(kA('ss_cash'),kA('ss_fat'))) +
+    kpiCard('🏷️ Vendas Método', kA('sdr_vendas'), '#ea5167', mven, false, '');
+
+  $('stat-ss').innerHTML =
+    statCard('Conv. Ativação→Lead', pct(kA('ss_lead'),kA('ss_atv'))+'%', '#ea5167') +
+    statCard('Total Ativações', num(kA('ss_atv')), '#ea5167') +
+    statCard('Total Leads', num(kA('ss_lead')), '#ea5167');
+
+  if (comparando) {
+    $('section-compare-ss').style.display='block';
+    $('compare-ss').innerHTML =
+      compareCard('📲 Ativações', kA('ss_atv'), kB('ss_atv'), false) +
+      compareCard('🎯 Leads SDR', kA('ss_lead'), kB('ss_lead'), false) +
+      compareCard('💰 Faturamento', kA('ss_fat'), kB('ss_fat'), true) +
+      compareCard('💵 Cash Collected', kA('ss_cash'), kB('ss_cash'), true);
+  } else {
+    $('section-compare-ss').style.display='none';
+  }
+
+  renderChart('chart-ss', filteredA, d=>d.ss_atv, '#ea5167');
+
+  $('tbody-ss').innerHTML = filteredA.map((d,i) => `
     <tr style="background:${i%2===0?'#fff':'#fef6f7'};border-bottom:1px solid #f0e0e3">
-      <td style="color:#666">${d.day||''}</td><td style="font-weight:600">${isoToBR(d.date)}</td>
-      <td style="color:#aaa">S${d.week||''}</td>
+      <td style="color:#666">${d.day||''}</td>
+      <td style="font-weight:600">${isoToBR(d.date)}</td>
       <td style="font-weight:700;color:#ea5167">${d.ss_atv||0}</td>
       <td>${d.ss_lead||0}</td>
       <td style="color:#27ae60">${fmt(d.ss_fat)}</td>
       <td style="color:#27ae60">${fmt(d.ss_cash)}</td>
     </tr>`).join('');
+}
 
-  $('tbody-sdr').innerHTML = filtered.map((d,i) => `
+function renderSDR(from, to) {
+  const mag   = getMeta('sdr_agend', from, to);
+  const mlig  = getMeta('sdr_lig',   from, to);
+  const mat   = getMeta('sdr_atend', from, to);
+  const mven  = getMeta('sdr_vendas', from, to);
+
+  $('kpi-sdr').innerHTML =
+    kpiCard('📅 Agendamentos', kA('sdr_agend'), '#4db8d4', mag, false, '') +
+    kpiCard('❌ No-Shows SDR', kA('sdr_noshow'), '#4db8d4', null, false, '') +
+    kpiCard('📞 Lig. Realizadas', kA('sdr_lig'), '#4db8d4', mlig, false, '') +
+    kpiCard('✅ Lig. Atendidas', kA('sdr_atend'), '#4db8d4', mat, false, '') +
+    kpiCard('🏷️ Vendas Método', kA('sdr_vendas'), '#4db8d4', mven, false, '');
+
+  $('stat-sdr').innerHTML =
+    statCard('Taxa Atendimento', pct(kA('sdr_atend'),kA('sdr_lig'))+'%', '#4db8d4') +
+    statCard('Taxa No-Show SDR', pct(kA('sdr_noshow'),kA('sdr_agend'))+'%', '#4db8d4') +
+    statCard('Conv. Atend→Venda', pct(kA('sdr_vendas'),kA('sdr_atend'))+'%', '#4db8d4') +
+    statCard('Conv. Atend→Agend', pct(kA('sdr_agend'),kA('sdr_atend'))+'%', '#4db8d4');
+
+  if (comparando) {
+    $('section-compare-sdr').style.display='block';
+    $('compare-sdr').innerHTML =
+      compareCard('📅 Agendamentos', kA('sdr_agend'), kB('sdr_agend'), false) +
+      compareCard('📞 Lig. Realizadas', kA('sdr_lig'), kB('sdr_lig'), false) +
+      compareCard('✅ Lig. Atendidas', kA('sdr_atend'), kB('sdr_atend'), false) +
+      compareCard('🏷️ Vendas', kA('sdr_vendas'), kB('sdr_vendas'), false);
+  } else {
+    $('section-compare-sdr').style.display='none';
+  }
+
+  renderChart('chart-sdr', filteredA, d=>d.sdr_agend, '#4db8d4');
+
+  $('tbody-sdr').innerHTML = filteredA.map((d,i) => `
     <tr style="background:${i%2===0?'#fff':'#f0fafd'};border-bottom:1px solid #e0f0f5">
-      <td style="color:#666">${d.day||''}</td><td style="font-weight:600">${isoToBR(d.date)}</td>
-      <td style="color:#aaa">S${d.week||''}</td>
+      <td style="color:#666">${d.day||''}</td>
+      <td style="font-weight:600">${isoToBR(d.date)}</td>
       <td style="font-weight:700;color:#4db8d4">${d.sdr_agend||0}</td>
       <td style="color:${(d.sdr_noshow||0)>0?'#ea5167':'#aaa'}">${d.sdr_noshow||0}</td>
-      <td>${d.sdr_lig||0}</td><td>${d.sdr_atend||0}</td>
+      <td>${d.sdr_lig||0}</td>
+      <td>${d.sdr_atend||0}</td>
       <td style="font-weight:700;color:#27ae60">${d.sdr_vendas||0}</td>
     </tr>`).join('');
+}
 
-  $('tbody-closer').innerHTML = filtered.map((d,i) => `
+function renderCloser(from, to) {
+  const mag  = getMeta('closer_agend',  from, to);
+  const mven = getMeta('closer_vendas', from, to);
+  const mfat = getMeta('closer_fat',    from, to);
+  const mch  = getMeta('closer_cash',   from, to);
+
+  $('kpi-closer').innerHTML =
+    kpiCard('📅 Calls Agendadas', kA('closer_agend'), '#27ae60', mag, false, '') +
+    kpiCard('✅ Calls Realizadas', kA('closer_real'), '#27ae60', null, false, '') +
+    kpiCard('❌ No-Shows', kA('closer_noshow'), '#27ae60', null, false, '') +
+    kpiCard('🏆 Vendas', kA('closer_vendas'), '#27ae60', mven, false, '') +
+    kpiCard('🤝 Em Negociação', kA('closer_neg'), '#f5a623', null, false, '') +
+    kpiCard('🚫 Recusou', kA('closer_rec'), '#ea5167', null, false, '');
+
+  $('kpi-closer-fin').innerHTML =
+    kpiCard('💰 Faturamento Mentoria', kA('closer_fat'), '#27ae60', mfat, true, '') +
+    kpiCard('💵 Cash Collected', kA('closer_cash'), '#27ae60', mch, true, cashBadgeHtml(kA('closer_cash'),kA('closer_fat')));
+
+  $('stat-closer').innerHTML =
+    statCard('Taxa de Show', pct(kA('closer_real'),kA('closer_agend'))+'%', '#27ae60', 'Agendadas → Realizadas') +
+    statCard('Taxa de Fechamento', pct(kA('closer_vendas'),kA('closer_real'))+'%', '#27ae60', 'Realizadas → Vendas') +
+    statCard('Taxa No-Show', pct(kA('closer_noshow'),kA('closer_agend'))+'%', '#27ae60', 'Agendadas → No-Show');
+
+  if (comparando) {
+    $('section-compare-closer').style.display='block';
+    $('compare-closer').innerHTML =
+      compareCard('📅 Calls Agendadas', kA('closer_agend'), kB('closer_agend'), false) +
+      compareCard('✅ Calls Realizadas', kA('closer_real'), kB('closer_real'), false) +
+      compareCard('🏆 Vendas', kA('closer_vendas'), kB('closer_vendas'), false) +
+      compareCard('💰 Faturamento', kA('closer_fat'), kB('closer_fat'), true) +
+      compareCard('💵 Cash Collected', kA('closer_cash'), kB('closer_cash'), true) +
+      compareCard('🤝 Negociação', kA('closer_neg'), kB('closer_neg'), false);
+  } else {
+    $('section-compare-closer').style.display='none';
+  }
+
+  renderChart('chart-closer', filteredA, d=>d.closer_fat, '#27ae60');
+
+  $('tbody-closer').innerHTML = filteredA.map((d,i) => `
     <tr style="background:${i%2===0?'#fff':'#f0fdf4'};border-bottom:1px solid #e0f0e8">
-      <td style="color:#666">${d.day||''}</td><td style="font-weight:600">${isoToBR(d.date)}</td>
-      <td style="color:#aaa">S${d.week||''}</td>
+      <td style="color:#666">${d.day||''}</td>
+      <td style="font-weight:600">${isoToBR(d.date)}</td>
       <td>${d.closer_agend||0}</td>
       <td style="font-weight:700;color:#27ae60">${d.closer_real||0}</td>
       <td style="color:${(d.closer_noshow||0)>0?'#ea5167':'#aaa'}">${d.closer_noshow||0}</td>
@@ -475,64 +576,100 @@ function render() {
     </tr>`).join('');
 }
 
-function renderChart(elId, accessor, color) {
-  const el = $(elId);
-  if (!el) return;
-  const max = Math.max(...filtered.map(accessor), 1);
-  const H = 118;
-  el.innerHTML = filtered.map(d => {
-    const v = parseFloat(accessor(d)) || 0;
-    const h = Math.max(Math.round((v/max)*H), 2);
-    const lbl = d.date ? d.date.slice(5).split('-').reverse().join('/') : '';
-    return `<div class="chart-col">
-      <div class="chart-val">${v>999?(v/1000).toFixed(1)+'k':v}</div>
-      <div class="chart-bar" style="height:${h}px;background:${color}"></div>
-      <div class="chart-lbl">${lbl}</div>
-    </div>`;
-  }).join('');
+// ── TAB / FILTROS ────────────────────────────────────────────
+function switchTab(btn) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  $('panel-'+btn.dataset.tab).classList.add('active');
 }
 
-// ── CARREGA DADOS DO SUPABASE ─────────────────────────────────
+function clearDates()  { $('date-from').value=minDate; $('date-to').value=maxDate; render(); }
+function clearDatesB() { $('date-from-b').value=minDate; $('date-to-b').value=maxDate; render(); }
+
+$('date-from').addEventListener('change', render);
+$('date-to').addEventListener('change', render);
+$('date-from-b').addEventListener('change', render);
+$('date-to-b').addEventListener('change', render);
+
+// ── COMPARAR ─────────────────────────────────────────────────
+function toggleComparar() {
+  comparando = !comparando;
+  const bar = $('compare-bar');
+  const btn = $('btn-compare');
+  const badgeA = $('badge-a');
+  if (comparando) {
+    bar.classList.add('visible');
+    btn.classList.add('btn-active');
+    btn.classList.remove('btn-blue');
+    badgeA.style.display='inline-block';
+    // Inicializa período B com mesmo intervalo de A
+    $('date-from-b').value = $('date-from').value;
+    $('date-to-b').value   = $('date-to').value;
+    $('date-from-b').min   = $('date-from').min;
+    $('date-to-b').max     = $('date-to').max;
+  } else {
+    bar.classList.remove('visible');
+    btn.classList.remove('btn-active');
+    btn.classList.add('btn-blue');
+    badgeA.style.display='none';
+  }
+  render();
+}
+
+// ── ATUALIZAR ────────────────────────────────────────────────
+async function atualizarDados() {
+  const btn = $('btn-refresh');
+  btn.disabled=true;
+  btn.innerHTML='<span class="spin">🔄</span> Sincronizando...';
+  try {
+    await fetch(WEBAPP_URL, {mode:'no-cors'});
+    await new Promise(r=>setTimeout(r,4000));
+    await loadData();
+    btn.innerHTML='✅ Atualizado!';
+  } catch(e) { btn.innerHTML='❌ Erro'; }
+  setTimeout(()=>{ btn.innerHTML='🔄 Atualizar'; btn.disabled=false; },3000);
+}
+
+// ── CARREGA DADOS ─────────────────────────────────────────────
+async function supaFetch(table, params) {
+  const res = await fetch(
+    SUPABASE_URL+'/rest/v1/'+table+'?'+params,
+    { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer '+SUPABASE_KEY } }
+  );
+  if (!res.ok) throw new Error(table+' HTTP '+res.status);
+  return res.json();
+}
+
 async function loadData() {
   try {
-    const res = await fetch(
-      SUPABASE_URL + '/rest/v1/dados_comerciais?select=*&order=date.asc&limit=1000',
-      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
-    );
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    allData = await res.json();
+    [allData, metas] = await Promise.all([
+      supaFetch('dados_comerciais','select=*&order=date.asc&limit=2000'),
+      supaFetch('metas','select=*&order=mes.asc'),
+    ]);
 
     if (!allData.length) {
-      $('loading').innerHTML = `<div style="color:#aaa;text-align:center">
-        📭 Nenhum dado encontrado ainda.<br>
-        <small>Execute o Apps Script na planilha para enviar os dados.</small>
-      </div>`;
+      $('loading').innerHTML='<div style="color:#aaa">📭 Nenhum dado encontrado.</div>';
       return;
     }
 
-    const dates = allData.map(d => d.date).sort();
-    minDate = dates[0]; maxDate = dates[dates.length-1];
-    $('date-from').min = $('date-to').min = minDate;
-    $('date-from').max = $('date-to').max = maxDate;
-    $('date-from').value = minDate;
-    $('date-to').value   = maxDate;
+    const dates = allData.map(d=>d.date).sort();
+    minDate=dates[0]; maxDate=dates[dates.length-1];
+
+    ['date-from','date-from-b'].forEach(id=>{ $(id).min=minDate; $(id).value=minDate; });
+    ['date-to','date-to-b'].forEach(id=>{ $(id).max=maxDate; $(id).value=maxDate; });
 
     const ultimo = allData[allData.length-1];
-    if (ultimo && ultimo.atualizado_em) {
-      const d = new Date(ultimo.atualizado_em);
-      $('last-updated').textContent = '🔄 Atualizado em: ' +
-        d.toLocaleDateString('pt-BR') + ' às ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+    if (ultimo?.atualizado_em) {
+      const d=new Date(ultimo.atualizado_em);
+      $('last-updated').textContent='🔄 Atualizado em: '+d.toLocaleDateString('pt-BR')+' às '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
     }
 
-    $('loading').style.display = 'none';
-    filtered = [...allData];
-    $('filter-count').textContent = filtered.length + ' dias';
+    $('loading').style.display='none';
     render();
 
   } catch(e) {
-    $('loading').innerHTML = `<div style="color:#ea5167;font-size:14px">
-      ⚠️ Erro ao conectar ao Supabase<br><small style="color:#aaa">${e.message}</small>
-    </div>`;
+    $('loading').innerHTML=`<div style="color:#ea5167">⚠️ Erro ao carregar<br><small>${e.message}</small></div>`;
   }
 }
 
