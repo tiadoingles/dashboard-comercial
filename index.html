@@ -115,28 +115,30 @@
       <div class="header-title">Dashboard Comercial 📊</div>
       <div class="header-updated" id="last-updated">Carregando...</div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
-      <!-- Período Principal (A) -->
+    <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+      <!-- Linha 1: período A + botões -->
       <div class="controls">
         <span class="period-badge badge-a" id="badge-a" style="display:none">A</span>
         <label>📅 De:</label>
         <input type="date" id="date-from" />
         <span class="sep">até</span>
         <input type="date" id="date-to" />
-        <button class="btn btn-ghost" onclick="clearDates()">↺</button>
+        <button class="btn btn-ghost" onclick="clearDates()" title="Limpar período">↺ Limpar</button>
         <button class="btn btn-red" id="btn-refresh" onclick="atualizarDados()">🔄 Atualizar</button>
-        <button class="btn btn-blue" id="btn-compare" onclick="toggleComparar()">⚖️ Comparar</button>
         <span class="filter-count" id="filter-count"></span>
       </div>
-      <!-- Período B (comparação) -->
-      <div class="compare-bar" id="compare-bar">
-        <span class="period-badge badge-b">B</span>
-        <label>De:</label>
-        <input type="date" id="date-from-b" />
-        <span class="sep">até</span>
-        <input type="date" id="date-to-b" />
-        <button class="btn btn-ghost" onclick="clearDatesB()">↺</button>
-        <span class="filter-count" id="filter-count-b"></span>
+      <!-- Linha 2: botão comparar (sempre visível) + período B -->
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+        <button class="btn btn-blue" id="btn-compare" onclick="toggleComparar()" style="white-space:nowrap">⚖️ Comparar períodos</button>
+        <div class="compare-bar" id="compare-bar" style="margin-top:0">
+          <span class="period-badge badge-b">B</span>
+          <label>De:</label>
+          <input type="date" id="date-from-b" />
+          <span class="sep">até</span>
+          <input type="date" id="date-to-b" />
+          <button class="btn btn-ghost" onclick="clearDatesB()">↺</button>
+          <span class="filter-count" id="filter-count-b"></span>
+        </div>
       </div>
     </div>
   </div>
