@@ -29,6 +29,18 @@
     }
     .filters span { color: rgba(255,255,255,0.45); }
     .btn-clear { background: rgba(255,255,255,0.15); border: none; border-radius: 8px; padding: 7px 14px; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
+
+    .btn-refresh {
+      background: #ea5167; border: none; border-radius: 8px;
+      padding: 7px 16px; color: #fff; font-size: 12px; font-weight: 800;
+      cursor: pointer; display: flex; align-items: center; gap: 6px;
+      transition: background .2s, opacity .2s;
+    }
+    .btn-refresh:hover { background: #d4405a; }
+    .btn-refresh:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-refresh .spin { display: inline-block; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     .filter-count { color: rgba(255,255,255,0.4); font-size: 12px; }
 
     .tabs { display: flex; gap: 4px; }
@@ -79,7 +91,6 @@
 
     .loading { display: flex; align-items: center; justify-content: center; height: 300px; font-size: 16px; color: #aaa; flex-direction: column; gap: 12px; }
     .spinner { width: 36px; height: 36px; border: 4px solid #eee; border-top-color: #ea5167; border-radius: 50%; animation: spin .8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
     .footer { text-align: center; color: #bbb; font-size: 11px; margin-top: 16px; }
   </style>
 </head>
@@ -98,6 +109,7 @@
       <span>até</span>
       <input type="date" id="date-to" />
       <button class="btn-clear" onclick="clearDates()">↺ Limpar</button>
+      <button class="btn-refresh" id="btn-refresh" onclick="atualizarDados()">🔄 Atualizar</button>
       <span class="filter-count" id="filter-count"></span>
     </div>
   </div>
@@ -249,8 +261,9 @@
 
 <script>
 // ── CONFIG SUPABASE ───────────────────────────────────────────
-const SUPABASE_URL = 'https://zqovgranduztrsskltsg.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpxb3ZncmFuZHV6dHJzc2tsdHNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MzE3NzUsImV4cCI6MjA5NzIwNzc3NX0.fJ2LfS9KrDcnTLO0BeQg3FIBQliBd4PxkUuknvI79Ro';
+const SUPABASE_URL = 'https://znazewysjyssjuqmasea.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuYXpld3lzanlzc2p1cW1hc2VhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2Mzg1NTUsImV4cCI6MjA5NzIxNDU1NX0.KgObQOJXiA_vvIU996fMJqTNUxxklnvA0NC5StVLnV8';
+const WEBAPP_URL  = 'https://script.google.com/macros/s/AKfycbzyXXWPO6W1EvIvzpAxKmB3NPy3xgNT_hXqGv_HuVJjqZ3l5m15ttKP6wZRvkX121CI/exec';
 
 const METAS = {
   ss_atv:900, ss_lead:60,
@@ -313,6 +326,30 @@ $('date-from').addEventListener('change', applyFilter);
 $('date-to').addEventListener('change',   applyFilter);
 
 function sum(key) { return filtered.reduce((a,d) => a+(parseFloat(d[key])||0), 0); }
+
+// ── BOTÃO ATUALIZAR ───────────────────────────────────────────
+async function atualizarDados() {
+  const btn = $('btn-refresh');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin">🔄</span> Sincronizando...';
+
+  try {
+    // Chama o Apps Script para sincronizar a planilha → Supabase
+    await fetch(WEBAPP_URL, { mode: 'no-cors' });
+    // Aguarda 4s para o sync concluir
+    await new Promise(r => setTimeout(r, 4000));
+    // Recarrega os dados do Supabase
+    await loadData();
+    btn.innerHTML = '✅ Atualizado!';
+  } catch(e) {
+    btn.innerHTML = '❌ Erro';
+  }
+
+  setTimeout(() => {
+    btn.innerHTML = '🔄 Atualizar';
+    btn.disabled = false;
+  }, 3000);
+}
 
 function render() {
   const k = {
@@ -405,8 +442,8 @@ function render() {
   const isoToBR = s => s ? s.split('-').reverse().join('/') : '';
   $('tbody-ss').innerHTML = filtered.map((d,i) => `
     <tr style="background:${i%2===0?'#fff':'#fef6f7'};border-bottom:1px solid #f0e0e3">
-      <td style="color:#666">${d.day}</td><td style="font-weight:600">${isoToBR(d.date)}</td>
-      <td style="color:#aaa">S${d.week}</td>
+      <td style="color:#666">${d.day||''}</td><td style="font-weight:600">${isoToBR(d.date)}</td>
+      <td style="color:#aaa">S${d.week||''}</td>
       <td style="font-weight:700;color:#ea5167">${d.ss_atv||0}</td>
       <td>${d.ss_lead||0}</td>
       <td style="color:#27ae60">${fmt(d.ss_fat)}</td>
@@ -415,8 +452,8 @@ function render() {
 
   $('tbody-sdr').innerHTML = filtered.map((d,i) => `
     <tr style="background:${i%2===0?'#fff':'#f0fafd'};border-bottom:1px solid #e0f0f5">
-      <td style="color:#666">${d.day}</td><td style="font-weight:600">${isoToBR(d.date)}</td>
-      <td style="color:#aaa">S${d.week}</td>
+      <td style="color:#666">${d.day||''}</td><td style="font-weight:600">${isoToBR(d.date)}</td>
+      <td style="color:#aaa">S${d.week||''}</td>
       <td style="font-weight:700;color:#4db8d4">${d.sdr_agend||0}</td>
       <td style="color:${(d.sdr_noshow||0)>0?'#ea5167':'#aaa'}">${d.sdr_noshow||0}</td>
       <td>${d.sdr_lig||0}</td><td>${d.sdr_atend||0}</td>
@@ -425,8 +462,8 @@ function render() {
 
   $('tbody-closer').innerHTML = filtered.map((d,i) => `
     <tr style="background:${i%2===0?'#fff':'#f0fdf4'};border-bottom:1px solid #e0f0e8">
-      <td style="color:#666">${d.day}</td><td style="font-weight:600">${isoToBR(d.date)}</td>
-      <td style="color:#aaa">S${d.week}</td>
+      <td style="color:#666">${d.day||''}</td><td style="font-weight:600">${isoToBR(d.date)}</td>
+      <td style="color:#aaa">S${d.week||''}</td>
       <td>${d.closer_agend||0}</td>
       <td style="font-weight:700;color:#27ae60">${d.closer_real||0}</td>
       <td style="color:${(d.closer_noshow||0)>0?'#ea5167':'#aaa'}">${d.closer_noshow||0}</td>
@@ -480,7 +517,6 @@ async function loadData() {
     $('date-from').value = minDate;
     $('date-to').value   = maxDate;
 
-    // Mostra data do último registro
     const ultimo = allData[allData.length-1];
     if (ultimo && ultimo.atualizado_em) {
       const d = new Date(ultimo.atualizado_em);
