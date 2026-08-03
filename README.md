@@ -259,7 +259,9 @@
 <script>
 // ── SUPABASE CONFIG (seu projeto original) ────────────────────
 const SUPABASE_URL='https://znazewysjyssjuqmasea.supabase.co';
-const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuYXpld3lzanlzc2p1cW1hc2VhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2Mzg1NTUsImV4cCI6MjA5NzIxNDU1NX0.placeholder_anon_key';
+const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuYXpld3lzanlzc2p1cW1hc2VhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2Mzg1NTUsImV4cCI6MjA5NzIxNDU1NX0.KgObQOJXiA_vvIU996fMJqTNUxxklnvA0NC5StVLnV8
+
+';
 // ATENÇÃO: substitua SUPABASE_ANON pela anon key do seu projeto em:
 // https://supabase.com/dashboard/project/znazewysjyssjuqmasea/settings/api
 
