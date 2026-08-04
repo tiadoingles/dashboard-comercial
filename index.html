@@ -8,16 +8,19 @@
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Inter',system-ui,sans-serif;background:#f5f6fa;color:#2c3e50}
     .header{background:linear-gradient(135deg,#1a2744 0%,#2d3f6e 100%);color:#fff;padding:24px 28px 0}
-    .header-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:18px;align-items:flex-start}
+    .header-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:18px;align-items:center}
     .brand{font-size:11px;color:#4db8d4;font-weight:700;letter-spacing:2px;text-transform:uppercase}
     .title{font-size:24px;font-weight:900;margin-top:4px}
     .updated{font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px}
-    .filters{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-    .filters label{color:rgba(255,255,255,0.7);font-size:13px;font-weight:600}
-    .filters input[type=date]{border-radius:8px;border:1.5px solid rgba(255,255,255,0.25);padding:6px 10px;font-size:13px;font-weight:600;background:rgba(255,255,255,0.12);color:#fff;color-scheme:dark;cursor:pointer}
-    .sep{color:rgba(255,255,255,0.45)}
-    .btn-clear{background:rgba(255,255,255,0.15);border:none;border-radius:8px;padding:7px 14px;color:#fff;font-size:12px;font-weight:700;cursor:pointer}
-    .fcount{color:rgba(255,255,255,0.4);font-size:12px}
+    /* FILTRO MAIOR */
+    .filters{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:rgba(255,255,255,0.08);border-radius:14px;padding:12px 18px;border:1px solid rgba(255,255,255,0.12)}
+    .filters label{color:rgba(255,255,255,0.85);font-size:14px;font-weight:700}
+    .filters input[type=date]{border-radius:10px;border:2px solid rgba(255,255,255,0.25);padding:10px 14px;font-size:14px;font-weight:700;background:rgba(255,255,255,0.12);color:#fff;color-scheme:dark;cursor:pointer;min-width:155px}
+    .filters input[type=date]:focus{outline:none;border-color:#4db8d4;background:rgba(255,255,255,0.2)}
+    .sep{color:rgba(255,255,255,0.4);font-size:16px}
+    .btn-clear{background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 20px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+    .btn-clear:hover{background:rgba(255,255,255,0.25)}
+    .fcount{color:rgba(255,255,255,0.5);font-size:13px;font-weight:600}
     .mes-badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:5px 12px;color:#4db8d4;font-size:12px;font-weight:700;display:none}
     .tabs{display:flex;gap:4px;flex-wrap:wrap}
     .tab{padding:9px 18px;border-radius:10px 10px 0 0;border:none;cursor:pointer;font-weight:700;font-size:13px;background:transparent;color:rgba(255,255,255,0.6);transition:all .2s}
@@ -67,6 +70,20 @@
     @keyframes spin{to{transform:rotate(360deg)}}
     .footer{text-align:center;color:#bbb;font-size:11px;margin-top:16px}
     .stars{color:#f5a623}
+    /* ── FUNIS ── */
+    .funnels-row{display:flex;gap:16px;flex-wrap:wrap}
+    .funnel-card{background:#fff;border-radius:16px;padding:22px 20px 18px;box-shadow:0 2px 14px rgba(0,0,0,0.07);flex:1;min-width:210px}
+    .funnel-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:18px;display:flex;align-items:center;gap:7px}
+    .funnel-step{position:relative;display:flex;align-items:center;border-radius:10px;overflow:hidden;height:48px;padding:0 14px;margin-bottom:2px}
+    .funnel-fill{position:absolute;left:0;top:0;bottom:0;border-radius:10px;transition:width .8s ease;opacity:.18}
+    .funnel-label{position:relative;z-index:1;font-size:12px;font-weight:600;color:#555;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .funnel-val{position:relative;z-index:1;font-size:20px;font-weight:900;color:#1a2744}
+    .funnel-connector{display:flex;align-items:center;justify-content:center;gap:8px;height:28px;color:#bbb;font-size:11px;font-weight:700}
+    .funnel-connector-arrow{font-size:16px;color:#ccc}
+    .funnel-connector-pct{background:#f0f0f0;color:#888;border-radius:20px;padding:2px 10px;font-size:11px;font-weight:800}
+    .funnel-connector-pct.good{background:#e8f8ef;color:#27ae60}
+    .funnel-connector-pct.mid{background:#fff8e8;color:#f5a623}
+    .funnel-connector-pct.bad{background:#fef0f0;color:#ea5167}
   </style>
 </head>
 <body>
@@ -78,8 +95,11 @@
       <div class="updated" id="last-updated">Carregando dados...</div>
     </div>
     <div class="filters">
-      <label>📅 De:</label><input type="date" id="date-from"/>
-      <span class="sep">até</span><input type="date" id="date-to"/>
+      <label>📅 De:</label>
+      <input type="date" id="date-from"/>
+      <span class="sep">→</span>
+      <label>Até:</label>
+      <input type="date" id="date-to"/>
       <button class="btn-clear" onclick="clearDates()">↺ Limpar</button>
       <span class="fcount" id="fcount"></span>
       <span class="mes-badge" id="mes-badge"></span>
@@ -109,15 +129,97 @@
         <div class="kpi" style="border-top:4px solid #4db8d4"><div class="kpi-label">💼 Vendas Inside Sales</div><div class="kpi-value" id="g-is-vendas">—</div></div>
       </div>
     </div>
+
+    <!-- FUNIS -->
     <div class="section">
-      <div class="sec-title"><div class="sec-bar" style="background:#f5a623"></div><h2>Taxas de Conversão</h2></div>
-      <div class="stat-row">
-        <div class="stat" style="border-top:4px solid #27ae60"><div class="stat-label">Taxa de Show (Closer)</div><div class="stat-value" style="color:#27ae60" id="g-show-rate">—</div><div class="stat-desc">Agendadas → Realizadas</div></div>
-        <div class="stat" style="border-top:4px solid #27ae60"><div class="stat-label">Taxa Fechamento (Closer)</div><div class="stat-value" style="color:#27ae60" id="g-close-rate">—</div><div class="stat-desc">Realizadas → Vendas</div></div>
-        <div class="stat" style="border-top:4px solid #f5a623"><div class="stat-label">Taxa Atend. SDR</div><div class="stat-value" style="color:#f5a623" id="g-sdr-atend-rate">—</div><div class="stat-desc">Ligações → Atendidas</div></div>
-        <div class="stat" style="border-top:4px solid #ea5167"><div class="stat-label">Conv. SS → Lead</div><div class="stat-value" style="color:#ea5167" id="g-ss-conv">—</div><div class="stat-desc">Ativações → Leads SDR</div></div>
+      <div class="sec-title"><div class="sec-bar" style="background:#f5a623"></div><h2>Funis de Conversão</h2></div>
+      <div class="funnels-row">
+
+        <!-- CLOSER -->
+        <div class="funnel-card">
+          <div class="funnel-title" style="color:#27ae60">🏆 Closer</div>
+          <div class="funnel-step" id="fcl-s1">
+            <div class="funnel-fill" style="background:#27ae60;width:100%"></div>
+            <div class="funnel-label">Calls Agendadas</div>
+            <div class="funnel-val" id="fcl-v1">—</div>
+          </div>
+          <div class="funnel-connector"><span class="funnel-connector-arrow">↓</span><span class="funnel-connector-pct" id="fcl-p1">—</span></div>
+          <div class="funnel-step" id="fcl-s2">
+            <div class="funnel-fill" style="background:#27ae60" id="fcl-f2"></div>
+            <div class="funnel-label">Calls Realizadas</div>
+            <div class="funnel-val" id="fcl-v2">—</div>
+          </div>
+          <div class="funnel-connector"><span class="funnel-connector-arrow">↓</span><span class="funnel-connector-pct" id="fcl-p2">—</span></div>
+          <div class="funnel-step">
+            <div class="funnel-fill" style="background:#27ae60" id="fcl-f3"></div>
+            <div class="funnel-label">Faturamento Total</div>
+            <div class="funnel-val" id="fcl-v3" style="font-size:14px">—</div>
+          </div>
+        </div>
+
+        <!-- SDR -->
+        <div class="funnel-card">
+          <div class="funnel-title" style="color:#f5a623">📞 SDR</div>
+          <div class="funnel-step">
+            <div class="funnel-fill" style="background:#f5a623;width:100%"></div>
+            <div class="funnel-label">Lig. Realizadas</div>
+            <div class="funnel-val" id="fsdr-v1">—</div>
+          </div>
+          <div class="funnel-connector"><span class="funnel-connector-arrow">↓</span><span class="funnel-connector-pct" id="fsdr-p1">—</span></div>
+          <div class="funnel-step">
+            <div class="funnel-fill" style="background:#f5a623" id="fsdr-f2"></div>
+            <div class="funnel-label">Lig. Atendidas</div>
+            <div class="funnel-val" id="fsdr-v2">—</div>
+          </div>
+          <div class="funnel-connector"><span class="funnel-connector-arrow">↓</span><span class="funnel-connector-pct" id="fsdr-p2">—</span></div>
+          <div class="funnel-step">
+            <div class="funnel-fill" style="background:#f5a623" id="fsdr-f3"></div>
+            <div class="funnel-label">Agendamentos</div>
+            <div class="funnel-val" id="fsdr-v3">—</div>
+          </div>
+        </div>
+
+        <!-- INSIDE SALES -->
+        <div class="funnel-card">
+          <div class="funnel-title" style="color:#4db8d4">💼 Inside Sales</div>
+          <div class="funnel-step">
+            <div class="funnel-fill" style="background:#4db8d4;width:100%"></div>
+            <div class="funnel-label">Lig. Realizadas</div>
+            <div class="funnel-val" id="fis-v1">—</div>
+          </div>
+          <div class="funnel-connector"><span class="funnel-connector-arrow">↓</span><span class="funnel-connector-pct" id="fis-p1">—</span></div>
+          <div class="funnel-step">
+            <div class="funnel-fill" style="background:#4db8d4" id="fis-f2"></div>
+            <div class="funnel-label">Lig. Atendidas</div>
+            <div class="funnel-val" id="fis-v2">—</div>
+          </div>
+          <div class="funnel-connector"><span class="funnel-connector-arrow">↓</span><span class="funnel-connector-pct" id="fis-p2">—</span></div>
+          <div class="funnel-step">
+            <div class="funnel-fill" style="background:#4db8d4" id="fis-f3"></div>
+            <div class="funnel-label">Faturamento Total</div>
+            <div class="funnel-val" id="fis-v3" style="font-size:14px">—</div>
+          </div>
+        </div>
+
+        <!-- SOCIAL SELLER -->
+        <div class="funnel-card">
+          <div class="funnel-title" style="color:#ea5167">📲 Social Seller</div>
+          <div class="funnel-step">
+            <div class="funnel-fill" style="background:#ea5167;width:100%"></div>
+            <div class="funnel-label">Ativações</div>
+            <div class="funnel-val" id="fss-v1">—</div>
+          </div>
+          <div class="funnel-connector"><span class="funnel-connector-arrow">↓</span><span class="funnel-connector-pct" id="fss-p1">—</span></div>
+          <div class="funnel-step">
+            <div class="funnel-fill" style="background:#ea5167" id="fss-f2"></div>
+            <div class="funnel-label">Leads Convertidos SDR</div>
+            <div class="funnel-val" id="fss-v2">—</div>
+          </div>
+        </div>
+
       </div>
     </div>
+
     <div class="section">
       <div class="sec-title"><div class="sec-bar" style="background:#27ae60"></div><h2>Faturamento por Dia</h2></div>
       <div class="chart-wrap"><div class="chart" id="chart-geral"></div></div>
@@ -257,11 +359,8 @@
 </div>
 
 <script>
-// ── SUPABASE CONFIG (seu projeto original) ────────────────────
 const SUPABASE_URL='https://znazewysjyssjuqmasea.supabase.co';
 const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuYXpld3lzanlzc2p1cW1hc2VhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2Mzg1NTUsImV4cCI6MjA5NzIxNDU1NX0.KgObQOJXiA_vvIU996fMJqTNUxxklnvA0NC5StVLnV8';
-// ATENÇÃO: substitua SUPABASE_ANON pela anon key do seu projeto em:
-// https://supabase.com/dashboard/project/znazewysjyssjuqmasea/settings/api
 
 const fmt=v=>(parseFloat(v)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const pct=(v,t)=>t>0?Math.round((v/t)*100):0;
@@ -279,7 +378,15 @@ function metaHtml(value,meta,isMonetary){
   return`<div class="kpi-meta"><div class="meta-row"><span>Meta: ${isMonetary?fmt(meta):num(meta)}</span><span style="color:${c};font-weight:700">${p}%</span></div><div class="bar-bg"><div class="bar" style="background:${c};width:${Math.min(p,100)}%"></div></div></div>`;
 }
 
-// Estado global
+// Cor da % de conversão do funil
+function pctClass(p){return p>=60?'good':p>=30?'mid':'bad';}
+
+// Atualiza um passo do funil
+function setFunnelStep(fillId, pct100){
+  const el=$(fillId);
+  if(el) el.style.width=Math.max(pct100,8)+'%';
+}
+
 let allData=[],filtered=[],metasMap={},minDate='',maxDate='';
 
 function getMesKey(filtered){
@@ -295,6 +402,17 @@ function switchTab(btn){
   btn.classList.add('active');$('panel-'+btn.dataset.tab).classList.add('active');
 }
 
+// Datas padrão: hoje e 30 dias atrás
+function todayISO(){const d=new Date();return d.toISOString().slice(0,10);}
+function daysAgoISO(n){const d=new Date();d.setDate(d.getDate()-n);return d.toISOString().slice(0,10);}
+
+function setDefaultDates(){
+  const to=todayISO();
+  const from=daysAgoISO(30);
+  $('date-from').value=from;
+  $('date-to').value=to;
+}
+
 function applyFilter(){
   const from=$('date-from').value||minDate,to=$('date-to').value||maxDate;
   filtered=allData.filter(d=>d.date>=from&&d.date<=to);
@@ -303,7 +421,12 @@ function applyFilter(){
   if(mk){mb.textContent='📊 Meta: '+mk;mb.style.display='inline';}else{mb.style.display='none';}
   render();
 }
-function clearDates(){$('date-from').value=minDate;$('date-to').value=maxDate;applyFilter();}
+
+function clearDates(){
+  setDefaultDates();
+  applyFilter();
+}
+
 $('date-from').addEventListener('change',applyFilter);
 $('date-to').addEventListener('change',applyFilter);
 const sum=key=>filtered.reduce((a,d)=>a+(parseFloat(d[key])||0),0);
@@ -325,14 +448,49 @@ function render(){
   const is_ticket=is_vendas>0?is_fat/is_vendas:0;
   const totalFat=cl_fat+is_fat+sum('sdr_fat'),totalCash=cl_cash+is_cash+sum('sdr_cash');
 
-  // GERAL
+  // GERAL KPIs
   $('g-fat').textContent=fmt(totalFat);$('g-cash').textContent=fmt(totalCash);setCashBadge(totalCash,totalFat,'g-cash-badge');
   $('g-ss-atv').textContent=num(ss_atv);$('g-ss-atv-meta').innerHTML=metaHtml(ss_atv,M.ss_atv,false);
   $('g-sdr-agend').textContent=num(sdr_agend);$('g-sdr-agend-meta').innerHTML=metaHtml(sdr_agend,M.sdr_agend,false);
   $('g-cl-vendas').textContent=num(cl_vendas);$('g-cl-vendas-meta').innerHTML=metaHtml(cl_vendas,M.closer_vendas,false);
   $('g-is-vendas').textContent=num(is_vendas);
-  $('g-show-rate').textContent=pct(cl_real,cl_agend)+'%';$('g-close-rate').textContent=pct(cl_vendas,cl_real)+'%';
-  $('g-sdr-atend-rate').textContent=pct(sdr_atend,sdr_lig)+'%';$('g-ss-conv').textContent=pct(ss_lead,ss_atv)+'%';
+
+  // ── FUNIS ──
+  // Closer
+  const clP1=pct(cl_real,cl_agend); // agend→real
+  const clP2=cl_real>0?1:0;         // fat sempre mostra (não há % direto fat/real)
+  $('fcl-v1').textContent=num(cl_agend);
+  $('fcl-v2').textContent=num(cl_real);
+  $('fcl-v3').textContent=fmt(cl_fat);
+  $('fcl-p1').textContent=clP1+'%';$('fcl-p1').className='funnel-connector-pct '+pctClass(clP1);
+  $('fcl-p2').textContent='Faturamento';$('fcl-p2').className='funnel-connector-pct mid';
+  setFunnelStep('fcl-f2',clP1);setFunnelStep('fcl-f3',Math.min(clP1*0.8,90));
+
+  // SDR
+  const sdrP1=pct(sdr_atend,sdr_lig);
+  const sdrP2=pct(sdr_agend,sdr_atend);
+  $('fsdr-v1').textContent=num(sdr_lig);
+  $('fsdr-v2').textContent=num(sdr_atend);
+  $('fsdr-v3').textContent=num(sdr_agend);
+  $('fsdr-p1').textContent=sdrP1+'%';$('fsdr-p1').className='funnel-connector-pct '+pctClass(sdrP1);
+  $('fsdr-p2').textContent=sdrP2+'%';$('fsdr-p2').className='funnel-connector-pct '+pctClass(sdrP2);
+  setFunnelStep('fsdr-f2',sdrP1);setFunnelStep('fsdr-f3',Math.max(sdrP1*sdrP2/100,5));
+
+  // Inside Sales
+  const isP1=pct(is_lig_atend,is_lig_real);
+  $('fis-v1').textContent=num(is_lig_real);
+  $('fis-v2').textContent=num(is_lig_atend);
+  $('fis-v3').textContent=fmt(is_fat);
+  $('fis-p1').textContent=isP1+'%';$('fis-p1').className='funnel-connector-pct '+pctClass(isP1);
+  $('fis-p2').textContent='Faturamento';$('fis-p2').className='funnel-connector-pct mid';
+  setFunnelStep('fis-f2',isP1);setFunnelStep('fis-f3',Math.min(isP1*0.8,90));
+
+  // Social Seller
+  const ssP1=pct(ss_lead,ss_atv);
+  $('fss-v1').textContent=num(ss_atv);
+  $('fss-v2').textContent=num(ss_lead);
+  $('fss-p1').textContent=ssP1+'%';$('fss-p1').className='funnel-connector-pct '+pctClass(ssP1);
+  setFunnelStep('fss-f2',ssP1);
 
   // CLOSER
   $('cl-agend').textContent=num(cl_agend);$('cl-agend-meta').innerHTML=metaHtml(cl_agend,M.closer_agend,false);
@@ -392,29 +550,22 @@ async function fetchSupabase(path){
 
 async function loadData(){
   try{
-    // Carrega dados e metas em paralelo
     const [dados,metas]=await Promise.all([
       fetchSupabase('/rest/v1/dados_comerciais?select=*&order=date.asc&limit=2000'),
       fetchSupabase('/rest/v1/metas?select=*').catch(()=>[])
     ]);
-
-    // Monta mapa de metas: { "08.26": { ss_atv:1365, ... } }
     metasMap={};
-    metas.forEach(m=>{ if(m.mes) metasMap[m.mes]=m; });
-
+    metas.forEach(m=>{if(m.mes)metasMap[m.mes]=m;});
     allData=dados;
     if(!allData.length){$('loading').innerHTML='<div style="color:#aaa;text-align:center">📭 Nenhum dado ainda.<br><small>Execute o Apps Script para sincronizar.</small></div>';return;}
-
     const dates=allData.map(d=>d.date).filter(Boolean).sort();
     minDate=dates[0];maxDate=dates[dates.length-1];
     ['date-from','date-to'].forEach(id=>{$(id).min=minDate;$(id).max=maxDate;});
-    $('date-from').value=minDate;$('date-to').value=maxDate;
-
+    // Padrão: hoje e 30 dias atrás
+    setDefaultDates();
     const ult=allData[allData.length-1];
     if(ult&&ult.atualizado_em){const d=new Date(ult.atualizado_em);$('last-updated').textContent='🔄 Atualizado em: '+d.toLocaleDateString('pt-BR')+' às '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
-
     $('loading').style.display='none';
-    filtered=[...allData];$('fcount').textContent=filtered.length+' dias';
     applyFilter();
   }catch(e){$('loading').innerHTML=`<div style="color:#ea5167;font-size:14px">⚠️ Erro ao conectar<br><small style="color:#aaa">${e.message}</small></div>`;}
 }
